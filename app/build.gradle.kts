@@ -33,6 +33,14 @@ android {
 
 dependencies {
 
+    implementation (libs.rxjava)
+    implementation (libs.rxandroid)
+    implementation(libs.lottie)
+    implementation(libs.material)  // The correct Material Components library for Java
+    implementation (libs.appcompat )        // AppCompat for backward compatibility
+    implementation (libs.constraintlayout) // ConstraintLayout for layouts
+
+
     implementation(libs.appcompat)
     implementation(libs.material)
     implementation(libs.activity)
