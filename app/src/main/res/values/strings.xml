@@ -13,4 +13,9 @@
     <string name="sign_up">Sign Up</string>
     <string name="sign_up_s">sign up</string>
     <string name="or">OR</string>
+    <string name="register_with_your_valid_email_address">Register with your valid email address</string>
+    <string name="confirm_password">Confirm Password</string>
+    <string name="already_have_an_account">Already have an account?</string>
+    <string name="sing_ins">sing in</string>
+    <string name="rewrite_your_password">Rewrite Your Password</string>
 </resources>

@@ -8,6 +8,8 @@
     app:layoutDescription="@xml/activity_main_scene"
     tools:context=".views.LoginActivity" >
 
+
+
     <ImageView
         android:id="@+id/imageView"
         android:layout_width="486dp"
@@ -37,7 +39,7 @@
     <TextView
         android:id="@+id/textView2"
         android:layout_marginStart="20dp"
-        android:layout_marginTop="220dp"
+        android:layout_marginTop="200dp"
         android:fontFamily="@font/petrona"
 
         android:textSize="24sp"
@@ -50,7 +52,7 @@
         android:fontFamily="@font/petrona"
 
         android:layout_marginStart="20dp"
-        android:layout_marginTop="260dp"
+        android:layout_marginTop="240dp"
         android:textSize="14sp"
 
         android:textColor="@color/primaryColor"
@@ -62,7 +64,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="300dp"
+        android:layout_marginTop="265dp"
         android:orientation="vertical">
 
         <TextView
@@ -218,7 +220,7 @@
             <ImageView
                 android:id="@+id/imageView6"
                 android:layout_width="50dp"
-                android:layout_height="wrap_content"
+                android:layout_height="50dp"
                 android:layout_marginStart="130dp"
                 android:clickable="true"
                 android:focusable="true"
@@ -227,7 +229,7 @@
             <ImageView
                 android:id="@+id/imageView5"
                 android:layout_width="50dp"
-                android:layout_height="wrap_content"
+                android:layout_height="50dp"
                 android:layout_marginStart="50dp"
                 android:clickable="true"
                 android:focusable="true"
@@ -235,5 +237,6 @@
         </LinearLayout>
 
     </LinearLayout>
+
 
 </FrameLayout>

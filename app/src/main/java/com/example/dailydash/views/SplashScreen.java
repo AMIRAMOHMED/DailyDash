@@ -22,12 +22,12 @@ public class SplashScreen extends AppCompatActivity {
         runnable = new Runnable() {
             @Override
             public void run() {
-                Intent intent = new Intent(SplashScreen.this, LoginActivity.class);
+                Intent intent = new Intent(SplashScreen.this, SignUp.class);
                 startActivity(intent);
                 finish();
             }
         };
-        handler.postDelayed(runnable, 3000); // 3-second delay before moving to MainActivity
+        handler.postDelayed(runnable, 3000);
     }
 
     @Override
