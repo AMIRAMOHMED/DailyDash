@@ -1,5 +1,6 @@
 plugins {
     alias(libs.plugins.android.application)
+    alias(libs.plugins.google.gms.google.services)
 }
 
 android {
@@ -39,7 +40,7 @@ dependencies {
     implementation(libs.material)  // The correct Material Components library for Java
     implementation (libs.appcompat )        // AppCompat for backward compatibility
     implementation (libs.constraintlayout) // ConstraintLayout for layouts
-
+    implementation (libs.firebase.auth )
 
     implementation(libs.appcompat)
     implementation(libs.material)

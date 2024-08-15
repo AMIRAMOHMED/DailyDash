@@ -1,4 +1,4 @@
-package com.example.dailydash.views;
+package com.example.dailydash.authentication.login.views;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -8,6 +8,7 @@ import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.dailydash.R;
+import com.example.dailydash.authentication.register.views.SignUp;
 
 public class SplashScreen extends AppCompatActivity {
     private Handler handler = new Handler();
