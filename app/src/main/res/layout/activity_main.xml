@@ -8,8 +8,6 @@
     app:layoutDescription="@xml/activity_main_scene"
     tools:context=".authentication.login.views.LoginActivity" >
 
-
-
     <ImageView
         android:id="@+id/imageView"
         android:layout_width="486dp"
@@ -188,7 +186,7 @@
             <TextView
                 android:id="@+id/textButton2"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:background="?attr/selectableItemBackgroundBorderless"
                 android:clickable="true"
                 android:focusable="true"
@@ -237,6 +235,15 @@
         </LinearLayout>
 
     </LinearLayout>
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/lottieAnimationView"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:layout_gravity="center"
+        android:visibility="gone"
+        app:lottie_rawRes="@raw/loadding"
+        app:lottie_autoPlay="false"
+        app:lottie_loop="true" />
 
 
 </FrameLayout>

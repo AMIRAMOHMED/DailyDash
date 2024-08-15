@@ -22,7 +22,7 @@ public class SignUp extends AppCompatActivity implements BaseView {
 
     RegisterPresenterImpl presenter;
     private TextInputEditText email, password, confirmPassword;
-    TextView signIn;
+      TextView signIn;
     MaterialButton signUp;
     ImageView signUpWithGoogle;
     LottieAnimationView lottieAnimationView;
@@ -40,7 +40,8 @@ public class SignUp extends AppCompatActivity implements BaseView {
         signIn = findViewById(R.id.textButton2);
         signUpWithGoogle = findViewById(R.id.imageView6);
 
-        presenter = new RegisterPresenterImpl(this, new Respiratory(this));
+        presenter = new RegisterPresenterImpl(this,
+                new Respiratory(this));
 
         signUp.setOnClickListener(v -> {
             presenter.onSignUpClicked(getEmail(), getPassword(), getConfirmPassword());
