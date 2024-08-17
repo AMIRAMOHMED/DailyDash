@@ -11,6 +11,7 @@ lottie = "6.0.0"
 material = "1.12.0"
 activity = "1.9.1"
 constraintlayout = "2.1.4"
+meowBottomNavigationJava = "1.2.0"
 rxandroid = "3.0.0"
 rxjava = "3.1.3"
 googleGmsGoogleServices = "4.4.2"
@@ -29,6 +30,7 @@ material = { group = "com.google.android.material", name = "material", version.r
 activity = { group = "androidx.activity", name = "activity", version.ref = "activity" }
 constraintlayout = { group = "androidx.constraintlayout", name = "constraintlayout", version.ref = "constraintlayout" }
 material3 = { module = "androidx.compose.material3:material3" }
+meow-bottom-navigation-java = { module = "com.etebarian:meow-bottom-navigation-java", version.ref = "meowBottomNavigationJava" }
 rxandroid = { module = "io.reactivex.rxjava3:rxandroid", version.ref = "rxandroid" }
 rxjava = { module = "io.reactivex.rxjava3:rxjava", version.ref = "rxjava" }
 firebase-auth = { group = "com.google.firebase", name = "firebase-auth", version.ref = "firebaseAuth" }

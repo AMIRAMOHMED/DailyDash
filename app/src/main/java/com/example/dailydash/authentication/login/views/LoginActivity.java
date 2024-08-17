@@ -17,6 +17,7 @@ import com.example.dailydash.authentication.data.repo.Respiratory;
 import com.example.dailydash.authentication.login.presenter.LoginPresenter;
 import com.example.dailydash.authentication.login.presenter.LoginPresenterImp;
 import com.example.dailydash.authentication.register.views.SignUp;
+import com.example.dailydash.home.views.HomeActivity;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
 
@@ -50,7 +51,9 @@ public class LoginActivity extends AppCompatActivity implements BaseView {
         signIn.setOnClickListener(v -> {
             String userEmail = email.getText().toString().trim();
             String userPassword = password.getText().toString().trim();
-            loginPresenter.onSignUpClicked(userEmail, userPassword);  // Trigger login
+            loginPresenter.onSignUpClicked(userEmail, userPassword);
+            Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
+            startActivity(intent);// Trigger login
         });
         signUp.setOnClickListener(v -> {
             Intent intent = new Intent(LoginActivity.this, SignUp.class);
