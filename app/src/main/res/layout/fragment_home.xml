@@ -5,18 +5,36 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".home.views.HomeFragment">
+    android:background="@color/white"
+    android:backgroundTint="@color/white"
+    tools:context=".home.views.fragments.HomeFragment">
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/ready_for_a_delicious_meal_today"
+        android:textColor="@color/darkGreen"
+        android:textSize="26sp"
+        android:textStyle="bold"
+        android:fontFamily="@font/petrona"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginTop="40dp"
+        />
+
+
+
+
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:elevation="10dp"
-        android:layout_marginStart="20dp"
-        android:layout_marginEnd="20dp"
-        android:layout_marginTop="20dp"
+        android:layout_margin="20dp"
+
         app:cardCornerRadius="16dp">
 
         <FrameLayout
+
             android:background="@drawable/test_image"
             android:id="@+id/constraintLayout"
             android:layout_width="match_parent"
@@ -64,6 +82,17 @@
 
         </FrameLayout>
 
+
+
     </androidx.cardview.widget.CardView>
+
+<androidx.recyclerview.widget.RecyclerView
+    android:id="@+id/categoryRecycle"
+    android:layout_marginStart="20dp"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"/>
+
+
+
 
 </LinearLayout>

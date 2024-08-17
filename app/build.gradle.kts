@@ -33,6 +33,8 @@ android {
 }
 
 dependencies {
+    implementation (libs.glide)
+    implementation (libs.circleimageview)
 
     implementation (libs.rxjava)
     implementation (libs.rxandroid)

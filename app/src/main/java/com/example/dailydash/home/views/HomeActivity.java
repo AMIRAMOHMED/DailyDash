@@ -7,14 +7,15 @@ import android.widget.FrameLayout;
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.example.dailydash.R;
+import com.example.dailydash.home.views.fragments.CalendarFragment;
+import com.example.dailydash.home.views.fragments.HomeFragment;
+import com.example.dailydash.home.views.fragments.ProfileFragment;
+import com.example.dailydash.home.views.fragments.SearchFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class HomeActivity extends AppCompatActivity {

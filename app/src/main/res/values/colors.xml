@@ -8,5 +8,6 @@
     <color name="LightGreen">#6A845B</color>
     <color name="LighterGreen">#969E90</color>
     <color name="LighterGray">#AAAAAA</color>
+    <color name="backGround">#E7F0DC</color>
 
 </resources>

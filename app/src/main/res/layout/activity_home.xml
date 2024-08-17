@@ -22,7 +22,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
             app:menu="@menu/bottom_nav_bar"
-            android:background="@color/LighterGray"
+            android:background="@color/backGround"
             app:itemRippleColor="@color/darkGreen"
             app:itemTextAppearanceActive="@color/darkGreen"
             />
