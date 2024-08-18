@@ -1,4 +1,4 @@
-package com.example.dailydash.home.adpoter;
+package com.example.dailydash.home.views.adpoter;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -40,7 +40,6 @@ public class CategoryItemAdaptor extends RecyclerView.Adapter<CategoryItemAdapto
             // Handle the cook now button click
         });
 
-        // Set the background image for the category
     }
 
     @Override

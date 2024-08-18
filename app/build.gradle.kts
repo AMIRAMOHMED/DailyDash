@@ -53,7 +53,7 @@ dependencies {
     implementation(libs.constraintlayout)
     implementation(libs.legacy.support.v4)
     testImplementation(libs.junit)
-
+implementation( libs.adapter.rxjava3)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
 }
