@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.dailydash.R;
+import com.example.dailydash.home.adpoter.CategoryItemAdaptor;
 import com.example.dailydash.home.adpoter.CategoryListAdapter;
 import com.example.dailydash.home.data.models.Category;
 
@@ -18,8 +19,9 @@ import java.util.ArrayList;
 
 public class HomeFragment extends Fragment {
 
-    private RecyclerView recyclerView;
+    private RecyclerView recyclerView2, recyclerView;
     private CategoryListAdapter categoryListAdapter;
+    CategoryItemAdaptor categoryItemAdaptor;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -28,7 +30,9 @@ public class HomeFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
 
         // Initialize RecyclerView
-        recyclerView = view.findViewById(R.id.categoryRecycle); // Assuming your RecyclerView has the ID "recyclerView" in fragment_home.xml
+        recyclerView = view.findViewById(R.id.categoryRecycle);
+        // Assuming your RecyclerView has the ID "recyclerView" in fragment_home.xml
+        recyclerView2 = view.findViewById(R.id.menuRecycle);
 
         // Initialize test data
         ArrayList<Category> testCategories = new ArrayList<>();
@@ -38,9 +42,12 @@ public class HomeFragment extends Fragment {
 
         // Initialize the adapter with the test data
         categoryListAdapter = new CategoryListAdapter(testCategories);
+        categoryItemAdaptor= new CategoryItemAdaptor(testCategories);
 
-        // Set up the RecyclerView with horizontal layout
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
+        LinearLayoutManager layoutManager2 = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
+        recyclerView2.setLayoutManager(layoutManager2);
+        recyclerView2.setAdapter(categoryItemAdaptor);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(categoryListAdapter);
         return view;

@@ -33,22 +33,27 @@ android {
 }
 
 dependencies {
-    implementation (libs.glide)
-    implementation (libs.circleimageview)
-
-    implementation (libs.rxjava)
-    implementation (libs.rxandroid)
+    implementation("com.squareup.retrofit2:adapter-rxjava2:2.9.0")
+    implementation (libs.retrofit)
+    implementation (libs.converter.gson)
+    implementation(libs.glide)
+    implementation(libs.circleimageview)
+    implementation(libs.rxjava)
+    implementation(libs.rxandroid)
     implementation(libs.lottie)
-    implementation(libs.material)  // The correct Material Components library for Java
-    implementation (libs.appcompat )        // AppCompat for backward compatibility
-    implementation (libs.constraintlayout) // ConstraintLayout for layouts
-    implementation (libs.firebase.auth )
-
+    implementation(libs.material)
+    implementation(libs.appcompat)
+    implementation(libs.constraintlayout)
+    implementation(libs.rxandroid.v302)
+    implementation(libs.firebase.auth)
+    implementation(libs.rxjava.v315)
     implementation(libs.appcompat)
     implementation(libs.material)
     implementation(libs.activity)
     implementation(libs.constraintlayout)
+    implementation(libs.legacy.support.v4)
     testImplementation(libs.junit)
+
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
 }
