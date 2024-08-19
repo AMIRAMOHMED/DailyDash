@@ -1,101 +1,200 @@
 package com.example.dailydash.home.views.fragments;
 
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.target.CustomTarget;
+import com.bumptech.glide.request.transition.Transition;
 import com.example.dailydash.R;
 import com.example.dailydash.home.data.models.CategoriesResponse;
-import com.example.dailydash.home.data.repo.Repository;
-import com.example.dailydash.home.views.adpoter.CategoryItemAdaptor;
-import com.example.dailydash.home.views.adpoter.CategoryListAdapter;
 import com.example.dailydash.home.data.models.Category;
-
+import com.example.dailydash.home.data.models.MealsResponse;
+import com.example.dailydash.home.data.repo.Repository;
+import com.example.dailydash.home.views.adpoter.MealItemAdaptor;
+import com.example.dailydash.home.views.adpoter.CategoryListAdapter;
 import java.util.ArrayList;
+import java.util.List;
 
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.disposables.CompositeDisposable;
 import io.reactivex.rxjava3.observers.DisposableObserver;
 
-public class HomeFragment extends Fragment {
+public class HomeFragment extends Fragment implements CategoryListAdapter.CategoryClickListener {
 
-        private RecyclerView recyclerView2, recyclerView;
-        private CategoryListAdapter categoryListAdapter;
-        private CategoryItemAdaptor categoryItemAdaptor;
-        private Repository repository;
-        private CompositeDisposable compositeDisposable;
+    private RecyclerView categoryRecyclerView, mealsRecyclerView;
+    private CategoryListAdapter categoryListAdapter;
+    private MealItemAdaptor mealItemAdaptor;
+    private Repository repository;
+    private CompositeDisposable compositeDisposable;
+    private FrameLayout constraintLayout;
+    private TextView nameOfMeal,cookNow;
 
-        @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                                 Bundle savedInstanceState) {
-            // Inflate the layout for this fragment
-            View view = inflater.inflate(R.layout.fragment_home, container, false);
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_home, container, false);
 
-            // Initialize RecyclerView
-            recyclerView = view.findViewById(R.id.categoryRecycle);
-            recyclerView2 = view.findViewById(R.id.menuRecycle);
+        // Initialize RecyclerViews
 
-            // Initialize adapters with empty data
-            categoryListAdapter = new CategoryListAdapter(new ArrayList<>());
-            categoryItemAdaptor = new CategoryItemAdaptor(new ArrayList<>());
+        categoryRecyclerView = view.findViewById(R.id.categoryRecycle);
+        mealsRecyclerView = view.findViewById(R.id.menuRecycle);
+        constraintLayout = view.findViewById(R.id.constraintLayoutRandom);
+         nameOfMeal = view.findViewById(R.id.nameOfMeal);
+         cookNow = view.findViewById(R.id.cookNow);
 
-            // Set layout managers
-            LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
-            LinearLayoutManager layoutManager2 = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
-            recyclerView.setLayoutManager(layoutManager);
-            recyclerView2.setLayoutManager(layoutManager2);
 
-            // Set adapters to the RecyclerViews
-            recyclerView.setAdapter(categoryListAdapter);
-            recyclerView2.setAdapter(categoryItemAdaptor);
+        // Initialize adapters with empty data
+        categoryListAdapter = new CategoryListAdapter(new ArrayList<>(), this); // 'this' for the click listener
+        mealItemAdaptor = new MealItemAdaptor(new ArrayList<>());
 
-            // Initialize repository and CompositeDisposable
-            repository = Repository.getInstance();
-            compositeDisposable = new CompositeDisposable();
+        // Set layout managers
+        LinearLayoutManager categoryLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
+        LinearLayoutManager mealsLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
+        categoryRecyclerView.setLayoutManager(categoryLayoutManager);
+        mealsRecyclerView.setLayoutManager(mealsLayoutManager);
 
-            // Fetch categories from the repository
-            fetchCategories();
+        // Set adapters
+        categoryRecyclerView.setAdapter(categoryListAdapter);
+        mealsRecyclerView.setAdapter(mealItemAdaptor);
 
-            return view;
-        }
+        // Initialize repository and CompositeDisposable
+        repository = Repository.getInstance();
+        compositeDisposable = new CompositeDisposable();
 
-        private void fetchCategories() {
-            // Subscribe to getCategories observable and update RecyclerView on success
-            compositeDisposable.add(repository.getCategories()
-                    .observeOn(AndroidSchedulers.mainThread())  // Observe on main thread to update UI
-                    .subscribeWith(new DisposableObserver<CategoriesResponse>() {
-                        @Override
-                        public void onNext(CategoriesResponse categoriesResponse) {
-                            if (categoriesResponse != null && categoriesResponse.getCategories() != null) {
-                                // Update adapter with fetched data
-                                categoryListAdapter.updateCategories(categoriesResponse.getCategories());
+        // Fetch categories
+        fetchCategories();
+        getRandomMeal();
+        return view;
+    }
+
+    private void fetchMealsByCategory(String category) {
+        compositeDisposable.add(repository.geMealsByCategory(category)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeWith(new DisposableObserver<MealsResponse>() {
+                    @Override
+                    public void onNext(MealsResponse mealsResponse) {
+                        if (mealsResponse != null && mealsResponse.getMeals() != null) {
+                            mealItemAdaptor.updateMeals(mealsResponse.getMeals());
+                        } else {
+                            mealItemAdaptor.updateMeals(new ArrayList<>()); // Clear the list if no meals are found
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        Toast.makeText(getContext(), "Error fetching meals", Toast.LENGTH_SHORT).show();
+                    }
+
+                    @Override
+                    public void onComplete() {
+                        // Optional: Handle completion
+                    }
+                }));
+    }
+
+    private void fetchCategories() {
+        compositeDisposable.add(repository.getCategories()
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeWith(new DisposableObserver<CategoriesResponse>() {
+                    @Override
+                    public void onNext(CategoriesResponse categoriesResponse) {
+                        if (categoriesResponse != null && categoriesResponse.getCategories() != null) {
+                            categoryListAdapter.updateCategories(categoriesResponse.getCategories());
+
+                            // Set "Beef" as the default category and load meals
+                            fetchMealsByCategory("Beef");
+
+                            // Optionally, highlight "Beef" in the category RecyclerView
+                            int beefPosition = findCategoryPosition("Beef", categoriesResponse.getCategories());
+                            if (beefPosition != -1) {
+                                categoryListAdapter.setSelectedPosition(beefPosition);
                             }
                         }
+                    }
 
-                        @Override
-                        public void onError(Throwable e) {
-                            // Handle any errors, e.g., show a toast
-                            Toast.makeText(getContext(), "Error fetching categories", Toast.LENGTH_SHORT).show();
-                        }
+                    @Override
+                    public void onError(Throwable e) {
+                        Toast.makeText(getContext(), "Error fetching categories", Toast.LENGTH_SHORT).show();
+                    }
 
-                        @Override
-                        public void onComplete() {
-                            // Handle completion (optional)
-                        }
-                    }));
-        }
-
-        @Override
-        public void onDestroy() {
-            super.onDestroy();
-            // Dispose of any active subscriptions when fragment is destroyed
-            compositeDisposable.clear();
-        }
+                    @Override
+                    public void onComplete() {
+                        // Optional: Handle completion
+                    }
+                }));
     }
+
+    // Helper method to find the position of "Beef" in the category list
+    private int findCategoryPosition(String category, List<Category> categories) {
+        for (int i = 0; i < categories.size(); i++) {
+            if (categories.get(i).getStrCategory().equals(category)) {
+                return i;
+            }
+        }
+        return -1;
+    }
+
+
+    @Override
+    public void onCategoryClick(String category) {
+        fetchMealsByCategory(category);
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        compositeDisposable.clear(); // Avoid memory leaks
+    }
+
+    private void getRandomMeal() {
+        compositeDisposable.add(repository.getRandomMeal()
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeWith(new DisposableObserver<MealsResponse>() {
+                    @Override
+                    public void onNext(MealsResponse mealsResponse) {
+                        if (mealsResponse != null && mealsResponse.getMeals() != null) {
+                            nameOfMeal.setText(mealsResponse.getMeals().get(0).getStrMeal());
+
+                            Glide.with(requireContext()) // Using requireContext() to get the Fragment's context
+                                    .load(mealsResponse.getMeals().get(0).getStrMealThumb()) // Correct image URL loading
+                                    .into(new CustomTarget<Drawable>() {
+                                        @Override
+                                        public void onResourceReady(@NonNull Drawable resource, @Nullable Transition<? super Drawable> transition) {
+                                            constraintLayout.setBackground(resource); // Set the background of the correct constraint layout
+                                        }
+
+                                        @Override
+                                        public void onLoadCleared(@Nullable Drawable placeholder) {
+                                            // Handle placeholder or null cases if needed
+                                        }
+                                    });
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        Toast.makeText(getContext(), "Error fetching random meal", Toast.LENGTH_SHORT).show();
+                    }
+
+                    @Override
+                    public void onComplete() {
+                        // Optional: Handle completion
+                    }
+                }));
+    }
+
+
+}

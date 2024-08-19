@@ -5,6 +5,7 @@ import com.example.dailydash.home.data.models.CategoriesResponse;
 import com.example.dailydash.home.data.models.MealsResponse;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+
 import io.reactivex.rxjava3.core.Observable;
 
 import retrofit2.Retrofit;
@@ -40,8 +41,13 @@ public class ApiClient {
     public Observable<CategoriesResponse> getCategories() {
         return apiService.getCategories();
     }
+
     public Observable<MealsResponse> getMealsByCategory(String category) {
         return apiService.getMealsByCategory(category);
+    }
+
+    public Observable<MealsResponse> getRandomMeal() {
+        return apiService.getRandomMeal();
     }
 
 }

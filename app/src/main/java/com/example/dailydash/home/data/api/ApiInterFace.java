@@ -14,4 +14,7 @@ public interface ApiInterFace {
     @GET("filter.php")
     public Observable<MealsResponse> getMealsByCategory(@Query("c") String category);
 
+@GET("random.php")
+public Observable<MealsResponse> getRandomMeal();
+
 }

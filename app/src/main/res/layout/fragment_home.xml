@@ -33,10 +33,10 @@
             app:cardCornerRadius="16dp">
 
             <FrameLayout
-                android:id="@+id/constraintLayout"
+                android:id="@+id/constraintLayoutRandom"
                 android:layout_width="match_parent"
                 android:layout_height="300dp"
-                android:background="@drawable/test_image">
+                >
 
                 <TextView
                     android:id="@+id/nameOfMeal"

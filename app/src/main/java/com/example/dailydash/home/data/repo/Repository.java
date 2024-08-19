@@ -28,8 +28,13 @@ public class Repository {
                 .subscribeOn(Schedulers.io());
     }
 
-    public Observable<MealsResponse> geMealsByCategory(String category) {
-        return apiClient.getMealsByCategory(category)
+    public Observable<MealsResponse> geMealsByCategory(String String) {
+        return apiClient.getMealsByCategory(String)
+                .subscribeOn(Schedulers.io());
+    }
+
+    public Observable<MealsResponse> getRandomMeal() {
+        return apiClient.getRandomMeal()
                 .subscribeOn(Schedulers.io());
     }
 }

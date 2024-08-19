@@ -12,8 +12,9 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="250dp"
+        android:id="@+id/constraintLayoutAll"
 
-        android:background="@drawable/test_image">
+        >
 
 
         <androidx.constraintlayout.widget.ConstraintLayout
