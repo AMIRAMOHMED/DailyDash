@@ -17,6 +17,10 @@ activity = "1.9.1"
 constraintlayout = "2.1.4"
 meowBottomNavigationJava = "1.2.0"
 retrofit = "2.11.0"
+roomCompiler = "2.6.1"
+roomGuava = "2.6.1"
+roomRuntime = "2.6.1"
+roomRxjava3 = "2.6.1"
 rxandroid = "3.0.0"
 rxandroidVersion = "3.0.2"
 rxjava = "3.1.3"
@@ -46,6 +50,10 @@ constraintlayout = { group = "androidx.constraintlayout", name = "constraintlayo
 material3 = { module = "androidx.compose.material3:material3" }
 meow-bottom-navigation-java = { module = "com.etebarian:meow-bottom-navigation-java", version.ref = "meowBottomNavigationJava" }
 retrofit = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofit" }
+room-compiler = { module = "androidx.room:room-compiler", version.ref = "roomCompiler" }
+room-runtime = { module = "androidx.room:room-runtime", version.ref = "roomRuntime" }
+room-rxjava3 = { module = "androidx.room:room-rxjava3", version.ref = "roomRxjava3" }
+room-guava = { module = "androidx.room:room-guava", version.ref = "roomGuava" }
 rxandroid = { module = "io.reactivex.rxjava3:rxandroid", version.ref = "rxandroid" }
 rxandroid-v302 = { module = "io.reactivex.rxjava3:rxandroid", version.ref = "rxandroidVersion" }
 rxjava = { module = "io.reactivex.rxjava3:rxjava", version.ref = "rxjava" }

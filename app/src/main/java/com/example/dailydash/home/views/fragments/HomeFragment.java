@@ -76,7 +76,7 @@ public class HomeFragment extends Fragment implements CategoryListAdapter.Catego
         mealsRecyclerView.setAdapter(mealItemAdaptor);
 
         // Initialize repository and CompositeDisposable
-        repository = Repository.getInstance();
+        repository = Repository.getInstance(this.getContext());
         compositeDisposable = new CompositeDisposable();
 
         // Fetch categories
@@ -86,7 +86,7 @@ public class HomeFragment extends Fragment implements CategoryListAdapter.Catego
     }
 
     private void fetchMealsByCategory(String category) {
-        compositeDisposable.add(repository.geMealsByCategory(category)
+        compositeDisposable.add(repository.getMealsByCategory(category)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeWith(new DisposableObserver<MealsResponse>() {
                     @Override
