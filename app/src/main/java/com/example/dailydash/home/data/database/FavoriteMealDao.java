@@ -16,6 +16,8 @@ public interface FavoriteMealDao {
 
     @Query("SELECT * FROM favorite_meals WHERE userId = :userId")
     Flowable<List<FavoriteMeal>> getAllFavoriteMeals(String userId);
+    @Query("SELECT * FROM favorite_meals WHERE mealId = :mealId LIMIT 1")
+    FavoriteMeal getMealById(String mealId);
 
     @Delete
     Completable delete(FavoriteMeal favoriteMeal);

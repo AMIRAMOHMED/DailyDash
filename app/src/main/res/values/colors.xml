@@ -9,5 +9,7 @@
     <color name="LighterGreen">#969E90</color>
     <color name="LighterGray">#AAAAAA</color>
     <color name="backGround">#E7F0DC</color>
+    <color name="red">#FF0000</color>
+
 
 </resources>

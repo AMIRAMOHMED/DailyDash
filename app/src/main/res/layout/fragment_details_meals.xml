@@ -51,15 +51,16 @@ android:padding="16dp">
         android:textStyle="bold" />
 
     <!-- Horizontal RecyclerView for Ingredients -->
+
+    <!-- Instructions Title -->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/ingredientRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
-        android:paddingTop="8dp"
-        android:clipToPadding="false"/>
+        android:clipToPadding="false"
+        android:paddingTop="8dp" />
 
-    <!-- Instructions Title -->
     <TextView
         android:id="@+id/instructionTitle"
         android:layout_width="match_parent"
@@ -113,6 +114,15 @@ android:padding="16dp">
         android:paddingTop="8dp"
         android:layout_marginBottom="16dp">
 
+        <ImageButton
+            android:id="@+id/favIcon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+
+            android:backgroundTint="@android:color/transparent"
+            app:srcCompat="@drawable/favorite" />
+
         <com.google.android.material.button.MaterialButton
             android:id="@+id/addToCalendarBtn"
             android:layout_width="wrap_content"
@@ -123,14 +133,6 @@ android:padding="16dp">
             app:iconPadding="8dp"
             android:layout_marginEnd="8dp" />
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/addToFavoritesBtn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:backgroundTint="@color/darkGreen"
-            android:text="Add to Favorites"
-            app:icon="@drawable/test_image"
-            app:iconPadding="8dp" />
     </LinearLayout>
 </LinearLayout>
 </ScrollView>

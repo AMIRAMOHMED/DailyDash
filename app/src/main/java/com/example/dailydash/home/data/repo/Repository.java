@@ -12,6 +12,7 @@ import io.reactivex.rxjava3.core.Flowable;
 import java.util.List;
 
 import io.reactivex.rxjava3.core.Observable;
+import io.reactivex.rxjava3.core.Single;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 
 public class Repository {
@@ -50,6 +51,11 @@ public class Repository {
     public Completable addFavoriteMeal(FavoriteMeal favoriteMeal) {
         return mealsDataBase.favoriteMealDao().insert(favoriteMeal);
     }
+    public Single<Boolean> isFavoriteMeal(String mealId) {
+        return Single.fromCallable(() -> mealsDataBase.favoriteMealDao().getMealById(mealId) != null)
+                .subscribeOn(Schedulers.io());
+    }
+
 
     public Flowable<List<FavoriteMeal>> getFavoriteMeals(String userId) {
         return mealsDataBase.favoriteMealDao().getAllFavoriteMeals(userId)
