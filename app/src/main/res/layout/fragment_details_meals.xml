@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+xmlns:app="http://schemas.android.com/apk/res-auto"
+xmlns:tools="http://schemas.android.com/tools"
+android:layout_width="match_parent"
+android:layout_height="match_parent"
+android:background="@color/white"
+android:layout_marginTop="18dp"
+android:padding="16dp">
+
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <!-- Meal Image -->
+    <ImageView
+        android:id="@+id/mealImage"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:scaleType="centerCrop"
+        android:layout_marginBottom="16dp"
+
+      />
+
+    <!-- Meal Title -->
+    <TextView
+        android:id="@+id/mealTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:fontFamily="@font/poppins"
+        android:gravity="center"
+        android:paddingTop="8dp"
+        android:text="Meal Title"
+        android:textColor="@color/black"
+        android:textSize="36sp"
+        android:textStyle="bold" />
+    <!-- Ingredients Title -->
+    <TextView
+        android:id="@+id/ingredientTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="4dp"
+        android:fontFamily="@font/poppins"
+        android:gravity="center"
+        android:paddingTop="16dp"
+        android:text="Ingredients"
+        android:textColor="@color/darkGreen"
+        android:textSize="28dp"
+        android:textStyle="bold" />
+
+    <!-- Horizontal RecyclerView for Ingredients -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/ingredientRecyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:paddingTop="8dp"
+        android:clipToPadding="false"/>
+
+    <!-- Instructions Title -->
+    <TextView
+        android:id="@+id/instructionTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:fontFamily="@font/poppins"
+        android:gravity="center"
+        android:paddingTop="16dp"
+        android:text="Instructions"
+        android:textColor="@color/darkGreen"
+        android:textSize="24dp" />
+
+    <!-- Instructions Content -->
+    <TextView
+        android:id="@+id/instructions"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:paddingTop="8dp"
+        android:text="Step-by-step instructions go here."
+        android:textColor="@color/LighterGreen"
+        android:textSize="16sp" />
+
+    <!-- Video Title -->
+    <TextView
+        android:id="@+id/videoTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:fontFamily="@font/poppins"
+        android:paddingTop="16dp"
+        android:text="Video of preparation method"
+        android:gravity="center"
+        android:textColor="@color/darkGreen"
+        android:textSize="24sp"
+        android:textStyle="bold" />
+
+    <!-- Video View -->
+    <VideoView
+        android:id="@+id/mealVideo"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:layout_marginBottom="16dp"/>
+
+    <!-- Buttons (Add to Calendar & Add to Favorites) -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:paddingTop="8dp"
+        android:layout_marginBottom="16dp">
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/addToCalendarBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/darkGreen"
+            android:text="Add to Calendar"
+            app:icon="@drawable/calendar"
+            app:iconPadding="8dp"
+            android:layout_marginEnd="8dp" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/addToFavoritesBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/darkGreen"
+            android:text="Add to Favorites"
+            app:icon="@drawable/test_image"
+            app:iconPadding="8dp" />
+    </LinearLayout>
+</LinearLayout>
+</ScrollView>

@@ -12,12 +12,14 @@ import androidx.annotation.Nullable;
 import androidx.annotation.NonNull;
 
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 
 import com.example.dailydash.R;
 import com.example.dailydash.home.data.models.Meals;
+import com.example.dailydash.home.views.fragments.HomeFragmentDirections;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -42,7 +44,12 @@ public class MealItemAdaptor extends RecyclerView.Adapter<MealItemAdaptor.MealVi
         Meals meal = meals.get(position); // Get the meal at the current position
 
         // Bind the Meal data to the views
-        holder.MealName.setText(meal.getStrMeal()); // Set meal name
+        holder.MealName.setText(meal.getStrMeal());
+        holder.cookNow.setOnClickListener(v -> {
+            HomeFragmentDirections.ActionHomeFragmentToDetailsMeals action =
+                    HomeFragmentDirections.actionHomeFragmentToDetailsMeals(meal);
+            Navigation.findNavController(v).navigate(action);
+        });
         holder.favIcon.setImageResource(R.drawable.person);
         Glide.with(holder.itemView.getContext()) // Use the context from the ViewHolder
                 .load(meal.getStrMealThumb()) // Assuming 'getImageUrl()' returns the image URL from the Meals object
@@ -51,6 +58,7 @@ public class MealItemAdaptor extends RecyclerView.Adapter<MealItemAdaptor.MealVi
                     public void onResourceReady(@NonNull Drawable resource, @Nullable Transition<? super Drawable> transition) {
                         holder.constraintLayout.setBackground(resource); // Set the background
                     }
+
 
                     @Override
                     public void onLoadCleared(@Nullable Drawable placeholder) {

@@ -1,31 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/main"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context=".home.views.HomeActivity">
+    android:layout_height="match_parent">
 
-
-    <FrameLayout
-        android:id="@+id/framLayout"
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/nav_host_fragment"
+        android:name="androidx.navigation.fragment.NavHostFragment"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_marginBottom="?attr/actionBarSize"
+        android:layout_height="match_parent"
+        app:navGraph="@navigation/nav_graph"
+        app:defaultNavHost="true" />
 
-        android:layout_weight="1">
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottom_navigation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
 
-        <com.google.android.material.bottomnavigation.BottomNavigationView
-            android:id="@+id/bottom_navigation"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom"
-
-            android:background="@color/backGround"
-            app:itemRippleColor="@color/darkGreen"
-            app:itemTextAppearanceActive="@color/darkGreen"
-            app:menu="@menu/bottom_nav_bar" />
-    </FrameLayout>
-
-</LinearLayout>
+        android:layout_alignParentBottom="true"
+        app:menu="@menu/bottom_nav_bar" />
+</RelativeLayout>

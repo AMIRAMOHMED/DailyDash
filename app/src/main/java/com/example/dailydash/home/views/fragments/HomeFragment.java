@@ -1,13 +1,18 @@
 package com.example.dailydash.home.views.fragments;
 
+import static android.content.ContentValues.TAG;
+
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -95,6 +100,7 @@ public class HomeFragment extends Fragment implements CategoryListAdapter.Catego
 
                     @Override
                     public void onError(Throwable e) {
+                        Log.i("Ammmira", "onError: "+ e);
                         Toast.makeText(getContext(), "Error fetching meals", Toast.LENGTH_SHORT).show();
                     }
 
@@ -167,6 +173,11 @@ public class HomeFragment extends Fragment implements CategoryListAdapter.Catego
                     public void onNext(MealsResponse mealsResponse) {
                         if (mealsResponse != null && mealsResponse.getMeals() != null) {
                             nameOfMeal.setText(mealsResponse.getMeals().get(0).getStrMeal());
+                            cookNow.setOnClickListener(v -> {
+                                com.example.dailydash.home.views.fragments.HomeFragmentDirections.ActionHomeFragmentToDetailsMeals action =
+                                        HomeFragmentDirections.actionHomeFragmentToDetailsMeals(mealsResponse.getMeals().get(0));
+                                Navigation.findNavController(requireView()).navigate(action);
+                            });
 
                             Glide.with(requireContext()) // Using requireContext() to get the Fragment's context
                                     .load(mealsResponse.getMeals().get(0).getStrMealThumb()) // Correct image URL loading

@@ -16,5 +16,7 @@ public interface ApiInterFace {
 
 @GET("random.php")
 public Observable<MealsResponse> getRandomMeal();
+@GET("lookup.php")
+public Observable<MealsResponse> getMealById(@Query("i") String id);
 
 }
