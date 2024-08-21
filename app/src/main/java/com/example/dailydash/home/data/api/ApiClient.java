@@ -59,4 +59,12 @@ public class ApiClient {
     public Observable<IngredientResponse> getIngredients() {
         return apiService.getIngredientsList();
     }
+
+    public  Observable<MealsResponse> getMealsByArea(String area) {
+        return apiService.getMealsByArea(area);
+    }
+
+    public Observable<MealsResponse> getMealsByIngredient(String ingredient) {
+        return apiService.getMealsByIngredient(ingredient);
+    }
 }

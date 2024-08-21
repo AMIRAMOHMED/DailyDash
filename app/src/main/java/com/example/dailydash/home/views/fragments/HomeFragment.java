@@ -57,8 +57,8 @@ public class HomeFragment extends Fragment implements CategoryListAdapter.Catego
         categoryRecyclerView = view.findViewById(R.id.categoryRecycle);
         mealsRecyclerView = view.findViewById(R.id.menuRecycle);
         constraintLayout = view.findViewById(R.id.constraintLayoutRandom);
-         nameOfMeal = view.findViewById(R.id.nameOfMeal);
-         cookNow = view.findViewById(R.id.cookNow);
+        nameOfMeal = view.findViewById(R.id.nameOfMeal);
+        cookNow = view.findViewById(R.id.cookNow);
 
 
         // Initialize adapters with empty data

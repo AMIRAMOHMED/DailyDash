@@ -15,18 +15,14 @@ import android.widget.Toast;
 
 import com.example.dailydash.R;
 import com.example.dailydash.home.data.database.FavoriteMeal;
-import com.example.dailydash.home.data.database.FavoriteMealDao;
 import com.example.dailydash.home.data.models.Ingredient;
 import com.example.dailydash.home.data.models.Meals;
 import com.example.dailydash.home.data.repo.Repository;
 import com.example.dailydash.home.views.Utility.FavoriteUtils;
 import com.example.dailydash.home.views.adpoter.IngredientAdapter;
 
-import java.util.ArrayList;
 import java.util.List;
 
-import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
-import io.reactivex.rxjava3.schedulers.Schedulers;
 
 public class DetailsMeals extends Fragment {
 
@@ -45,8 +41,6 @@ public class DetailsMeals extends Fragment {
             textView.setText(meal.getStrMeal());
             repository = Repository.getInstance(getContext());
             List<Ingredient> ingredients = meal.getIngredients();
-            Log.i("DetailsMeals", "Ingredients size: " + ingredients.size());
-            Log.i("Bebo", "onCreateView: " + ingredients.get(0).getName());
             recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
             IngredientAdapter adapter = new IngredientAdapter(getContext(), ingredients);
             recyclerView.setAdapter(adapter);

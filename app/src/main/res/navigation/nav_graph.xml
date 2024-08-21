@@ -23,7 +23,11 @@
         android:id="@+id/navSearch"
         android:name="com.example.dailydash.home.views.fragments.SearchFragment"
         android:label="fragment_search"
-        tools:layout="@layout/fragment_search" />
+        tools:layout="@layout/fragment_search" >
+        <action
+            android:id="@+id/action_navSearch_to_mealsFragment"
+            app:destination="@id/mealsFragment" />
+    </fragment>
     <fragment
         android:id="@+id/navProfile"
         android:name="com.example.dailydash.home.views.fragments.ProfileFragment"
@@ -37,5 +41,18 @@
         <argument
             android:name="meal"
             app:argType="com.example.dailydash.home.data.models.Meals" />
+    </fragment>
+    <fragment
+        android:id="@+id/mealsFragment"
+        android:name="com.example.dailydash.home.views.fragments.MealsFragment"
+        android:label="fragment_meals"
+        tools:layout="@layout/fragment_meals">
+    <argument
+        android:name="meal"
+
+        app:argType="com.example.dailydash.home.data.models.Meals" />
+        <argument
+            android:name="choosensearch"
+            app:argType="string" />
     </fragment>
 </navigation>

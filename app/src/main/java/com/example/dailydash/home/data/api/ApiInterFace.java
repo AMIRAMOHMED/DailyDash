@@ -20,10 +20,14 @@ public interface ApiInterFace {
 public Observable<MealsResponse> getRandomMeal();
 @GET("lookup.php")
 public Observable<MealsResponse> getMealById(@Query("i") String id);
-    @GET("list.php?i=list")
+@GET("list.php?i=list")
     Observable<IngredientResponse> getIngredientsList();
-
-    @GET("list.php?a=list")
+@GET("list.php?a=list")
     Observable<AreaResponse> getAreasList();
+@GET("filter.php")
+Observable<MealsResponse> getMealsByArea(@Query("a") String area);
+
+@GET("filter.php")
+Observable<MealsResponse> getMealsByIngredient(@Query("i") String ingredient);
 
 }

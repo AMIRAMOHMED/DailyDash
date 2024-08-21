@@ -53,11 +53,21 @@ public class Repository {
         return apiClient.getAreas()
                 .subscribeOn(Schedulers.io());
     }
+
     public Observable<IngredientResponse> getIngredients() {
         return apiClient.getIngredients()
                 .subscribeOn(Schedulers.io());
     }
 
+public  Observable<MealsResponse> getMealsByIngredient(String ingredient) {
+    return apiClient.getMealsByIngredient(ingredient)
+            .subscribeOn(Schedulers.io());
+}
+
+public  Observable<MealsResponse> getMealsByArea(String area) {
+    return apiClient.getMealsByArea(area)
+            .subscribeOn(Schedulers.io());
+}
 
 
 
