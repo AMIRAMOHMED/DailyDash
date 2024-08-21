@@ -1,7 +1,9 @@
 package com.example.dailydash.home.data.api;
 
 
+import com.example.dailydash.home.data.models.AreaResponse;
 import com.example.dailydash.home.data.models.CategoriesResponse;
+import com.example.dailydash.home.data.models.IngredientResponse;
 import com.example.dailydash.home.data.models.MealsResponse;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -49,5 +51,12 @@ public class ApiClient {
     public Observable<MealsResponse> getRandomMeal() {
         return apiService.getRandomMeal();
     }
+    public Observable<AreaResponse> getAreas() {
+        return apiService.getAreasList();
+    }
 
+
+    public Observable<IngredientResponse> getIngredients() {
+        return apiService.getIngredientsList();
+    }
 }

@@ -1,6 +1,8 @@
 package com.example.dailydash.home.data.api;
 
+import com.example.dailydash.home.data.models.AreaResponse;
 import com.example.dailydash.home.data.models.CategoriesResponse;
+import com.example.dailydash.home.data.models.IngredientResponse;
 import com.example.dailydash.home.data.models.MealsResponse;
 
 import io.reactivex.rxjava3.core.Observable;
@@ -18,5 +20,10 @@ public interface ApiInterFace {
 public Observable<MealsResponse> getRandomMeal();
 @GET("lookup.php")
 public Observable<MealsResponse> getMealById(@Query("i") String id);
+    @GET("list.php?i=list")
+    Observable<IngredientResponse> getIngredientsList();
+
+    @GET("list.php?a=list")
+    Observable<AreaResponse> getAreasList();
 
 }

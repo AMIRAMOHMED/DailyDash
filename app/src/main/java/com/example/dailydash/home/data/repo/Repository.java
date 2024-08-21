@@ -5,7 +5,9 @@ import android.content.Context;
 import com.example.dailydash.home.data.api.ApiClient;
 import com.example.dailydash.home.data.database.FavoriteMeal;
 import com.example.dailydash.home.data.database.MealsDataBase;
+import com.example.dailydash.home.data.models.AreaResponse;
 import com.example.dailydash.home.data.models.CategoriesResponse;
+import com.example.dailydash.home.data.models.IngredientResponse;
 import com.example.dailydash.home.data.models.MealsResponse;
 import io.reactivex.rxjava3.core.Completable;
 import io.reactivex.rxjava3.core.Flowable;
@@ -46,6 +48,18 @@ public class Repository {
         return apiClient.getRandomMeal()
                 .subscribeOn(Schedulers.io());
     }
+
+    public Observable<AreaResponse> getAreas() {
+        return apiClient.getAreas()
+                .subscribeOn(Schedulers.io());
+    }
+    public Observable<IngredientResponse> getIngredients() {
+        return apiClient.getIngredients()
+                .subscribeOn(Schedulers.io());
+    }
+
+
+
 
     // Database methods
     public Completable addFavoriteMeal(FavoriteMeal favoriteMeal) {

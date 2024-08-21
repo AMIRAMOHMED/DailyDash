@@ -42,7 +42,6 @@ dependencies {
     implementation (libs.converter.gson)
     implementation(libs.glide)
     implementation(libs.circleimageview)
-    implementation(libs.rxjava)
     implementation(libs.rxandroid)
     implementation(libs.lottie)
     implementation(libs.material)
@@ -61,6 +60,7 @@ dependencies {
     implementation(libs.navigation.fragment)
     implementation(libs.navigation.ui)
     testImplementation(libs.junit)
+
      implementation( libs.adapter.rxjava3)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
