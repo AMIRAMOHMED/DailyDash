@@ -60,7 +60,6 @@ dependencies {
     implementation(libs.navigation.fragment)
     implementation(libs.navigation.ui)
     testImplementation(libs.junit)
-
      implementation( libs.adapter.rxjava3)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)

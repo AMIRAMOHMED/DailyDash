@@ -10,39 +10,41 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.FrameLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.dailydash.R;
 import com.example.dailydash.home.data.models.Meals;
-import com.example.dailydash.home.data.repo.Repository;
-import com.example.dailydash.home.views.adpoter.CategoryListAdapter;
+import com.example.dailydash.home.presenter.MealsPresenter;
 import com.example.dailydash.home.views.adpoter.MealItemAdaptor;
+import com.example.dailydash.home.data.repo.Repository;
+import com.example.dailydash.home.views.interfaces.MealsFragmentInterface;
 
-import io.reactivex.rxjava3.disposables.CompositeDisposable;
+import java.util.ArrayList;
+import java.util.List;
 
-public class MealsFragment extends Fragment {
 
-    private RecyclerView  mealsRecyclerView;
+public class MealsFragment extends Fragment implements MealsFragmentInterface {
+
     private MealItemAdaptor mealItemAdaptor;
-    private Repository repository;
-    private CompositeDisposable compositeDisposable;
-    private TextView nameOfMeal,cookNow;
+    private MealsPresenter presenter;
 
 
     @Override
-
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_home, container, false);
+        View view = inflater.inflate(R.layout.fragment_meals, container, false);
 
-        mealsRecyclerView = view.findViewById(R.id.menuRecycle);
+        RecyclerView mealsRecyclerView = view.findViewById(R.id.mealRecycler);
+        TextView nameOfMeal = view.findViewById(R.id.title);
+
         LinearLayoutManager mealsLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
         mealsRecyclerView.setLayoutManager(mealsLayoutManager);
+        mealItemAdaptor = new MealItemAdaptor(new ArrayList<>(),this);
         mealsRecyclerView.setAdapter(mealItemAdaptor);
-        repository = Repository.getInstance(this.getContext());
-        compositeDisposable = new CompositeDisposable();
+
+        Repository repository = Repository.getInstance(this.getContext());
+        presenter = new MealsPresenter(this, repository);
 
         if (getArguments() != null) {
             String choosensearch = getArguments().getString("choosensearch");
@@ -50,12 +52,27 @@ public class MealsFragment extends Fragment {
 
             Log.d("MealsFragment", "Choosen Search: " + choosensearch);
             Log.d("MealsFragment", "Specified Type: " + specifiedType);
+
+            presenter.fetchMeals(choosensearch, specifiedType);
+            nameOfMeal.setText(choosensearch);
         }
 
         return view;
     }
 
-    if(choosensearch.equals("search")) {
-        fetchMeals(specifiedType);
+    @Override
+    public void showMeals(List<Meals> meals) {
+        mealItemAdaptor.updateMeals(meals);
+    }
+
+    @Override
+    public void showError(String errorMessage) {
+        Toast.makeText(getContext(), errorMessage, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        presenter.onDestroy();
     }
 }

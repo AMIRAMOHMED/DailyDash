@@ -1,5 +1,6 @@
 package com.example.dailydash.home.views.adpoter;
 
+import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,6 +13,7 @@ import androidx.annotation.Nullable;
 import androidx.annotation.NonNull;
 
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -19,17 +21,23 @@ import com.bumptech.glide.Glide;
 
 import com.example.dailydash.R;
 import com.example.dailydash.home.data.models.Meals;
+import com.example.dailydash.home.views.fragments.HomeFragment;
 import com.example.dailydash.home.views.fragments.HomeFragmentDirections;
+import com.example.dailydash.home.views.fragments.MealsFragment;
+import com.example.dailydash.home.views.fragments.MealsFragmentDirections;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class MealItemAdaptor extends RecyclerView.Adapter<MealItemAdaptor.MealViewHolder> {
 
-    private ArrayList<Meals> meals; // List of meals
+    private ArrayList<Meals> meals;
+    private Fragment fragment; // List of meals
 
-    public MealItemAdaptor(ArrayList<Meals> meals) {
-        this.meals = meals; // Constructor for initializing the meal list
+    public MealItemAdaptor(ArrayList<Meals> meals, Fragment fragment) {
+        this.meals = meals;
+        // Constructor for initializing the meal list
+        this.fragment = fragment;
     }
 
     @NonNull
@@ -46,10 +54,17 @@ public class MealItemAdaptor extends RecyclerView.Adapter<MealItemAdaptor.MealVi
         // Bind the Meal data to the views
         holder.MealName.setText(meal.getStrMeal());
         holder.cookNow.setOnClickListener(v -> {
-            HomeFragmentDirections.ActionHomeFragmentToDetailsMeals action =
-                    HomeFragmentDirections.actionHomeFragmentToDetailsMeals(meal);
-            Navigation.findNavController(v).navigate(action);
+            if (fragment instanceof HomeFragment) {
+                HomeFragmentDirections.ActionHomeFragmentToDetailsMeals action =
+                        HomeFragmentDirections.actionHomeFragmentToDetailsMeals(meal);
+                Navigation.findNavController(v).navigate(action);
+            } else if (fragment instanceof MealsFragment) {
+                MealsFragmentDirections.ActionMealsFragmentToDetailsMeals action =
+                        MealsFragmentDirections.actionMealsFragmentToDetailsMeals(meal);
+                Navigation.findNavController(v).navigate(action);
+            }
         });
+
         holder.favIcon.setImageResource(R.drawable.person);
         Glide.with(holder.itemView.getContext()) // Use the context from the ViewHolder
                 .load(meal.getStrMealThumb()) // Assuming 'getImageUrl()' returns the image URL from the Meals object
@@ -78,7 +93,6 @@ public class MealItemAdaptor extends RecyclerView.Adapter<MealItemAdaptor.MealVi
 
         TextView MealName, cookNow; // Views for meal name and cook now button
         ImageView favIcon; // Favorite icon
-        ImageView background; // Background image (not yet used in onBind)
         ConstraintLayout constraintLayout ;
 
         public MealViewHolder(@NonNull View itemView) {

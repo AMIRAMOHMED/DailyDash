@@ -63,7 +63,7 @@ public class HomeFragment extends Fragment implements CategoryListAdapter.Catego
 
         // Initialize adapters with empty data
         categoryListAdapter = new CategoryListAdapter(new ArrayList<>(), this); // 'this' for the click listener
-        mealItemAdaptor = new MealItemAdaptor(new ArrayList<>());
+        mealItemAdaptor = new MealItemAdaptor(new ArrayList<>(),this);
 
         // Set layout managers
         LinearLayoutManager categoryLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
