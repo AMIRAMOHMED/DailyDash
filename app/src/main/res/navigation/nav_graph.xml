@@ -47,12 +47,12 @@
         android:name="com.example.dailydash.home.views.fragments.MealsFragment"
         android:label="fragment_meals"
         tools:layout="@layout/fragment_meals">
-    <argument
-        android:name="meal"
 
-        app:argType="com.example.dailydash.home.data.models.Meals" />
         <argument
             android:name="choosensearch"
+            app:argType="string" />
+        <argument
+            android:name="specifiedType"
             app:argType="string" />
     </fragment>
 </navigation>

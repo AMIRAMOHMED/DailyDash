@@ -1,7 +1,6 @@
 package com.example.dailydash.home.views.fragments;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -91,7 +90,6 @@ public class SearchFragment extends Fragment {
 
                             @Override
                             public void onComplete() {
-                                Log.i("Ammira", "onComplete: "+ingredientResponseList.get(0).getStrIngredient());
 
                             }
                         })
@@ -110,7 +108,6 @@ public class SearchFragment extends Fragment {
                                 if (areaResponse != null && areaResponse.getMeals() != null) {
                                     areaResponseList = areaResponse.getMeals();
                                     adapter.updateData(new ArrayList<>(areaResponseList));
-
                                 }
                             }
 
@@ -121,7 +118,6 @@ public class SearchFragment extends Fragment {
 
                             @Override
                             public void onComplete() {
-                                Log.i("Ammira", "onComplete: "+areaResponseList.get(0).getStrArea());
 
                             }
                         })
@@ -150,7 +146,6 @@ public class SearchFragment extends Fragment {
 
                             @Override
                             public void onComplete() {
-                                Log.i("Ammira", "onComplete: "+categoriesResponseList.get(0).getStrCategory());
 
                             }
                         })

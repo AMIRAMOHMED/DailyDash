@@ -7,6 +7,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
@@ -14,6 +16,7 @@ import com.example.dailydash.R;
 import com.example.dailydash.home.data.models.Area;
 import com.example.dailydash.home.data.models.Category;
 import com.example.dailydash.home.data.models.IngredientS;
+import com.example.dailydash.home.views.fragments.SearchFragmentDirections;
 
 import java.util.HashMap;
 import java.util.List;
@@ -63,26 +66,43 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.SearchView
     static class SearchViewHolder extends RecyclerView.ViewHolder {
         TextView title;
         ImageView searchCategoryImage;
+        CardView cardView;
 
         SearchViewHolder(View itemView) {
             super(itemView);
             title = itemView.findViewById(R.id.searchname);
+            cardView =itemView.findViewById(R.id.searchrecyler);
             searchCategoryImage = itemView.findViewById(R.id.searchcategoryImage);
         }
     }
 
     private void bindCategory(SearchViewHolder holder, Category category) {
         holder.title.setText(category.getStrCategory());
+        holder.cardView.setOnClickListener(v -> {
 
+            SearchFragmentDirections.ActionNavSearchToMealsFragment action =
+                    SearchFragmentDirections.actionNavSearchToMealsFragment("Category", category.getStrCategory());
+            Navigation.findNavController(v).navigate(action);
+
+
+        });
         // Load the image using Glide
         Glide.with(holder.itemView.getContext())
                 .load(category.getStrCategoryThumb())
                 .into(holder.searchCategoryImage);
+
     }
 
     private void bindArea(SearchViewHolder holder, Area area) {
         holder.title.setText(area.getStrArea());
+        holder.cardView.setOnClickListener(v -> {
 
+            SearchFragmentDirections.ActionNavSearchToMealsFragment action =
+                    SearchFragmentDirections.actionNavSearchToMealsFragment("Area", area.getStrArea());
+            Navigation.findNavController(v).navigate(action);
+
+
+        });
         // Load the flag image based on the area
         String flagUrl = areaFlagMap.get(area.getStrArea());
         if (flagUrl != null) {
@@ -97,7 +117,14 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.SearchView
 
     private void bindIngredient(SearchViewHolder holder, IngredientS ingredient) {
         holder.title.setText(ingredient.getStrIngredient());
+holder.cardView.setOnClickListener(v -> {
 
+    SearchFragmentDirections.ActionNavSearchToMealsFragment action =
+            SearchFragmentDirections.actionNavSearchToMealsFragment("IngredientS", ingredient.getStrIngredient());
+    Navigation.findNavController(v).navigate(action);
+
+
+});
         Glide.with(holder.itemView.getContext())
                 .load("https://www.themealdb.com/images/ingredients/" + ingredient.getStrIngredient() + ".png")
                 .into(holder.searchCategoryImage);
