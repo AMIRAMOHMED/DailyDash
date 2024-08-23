@@ -16,7 +16,7 @@
     </fragment>
     <fragment
         android:id="@+id/navCalendar"
-        android:name="com.example.dailydash.home.views.fragments.CalendarFragment"
+        android:name="com.example.dailydash.planer.views.fragment.CalendarFragment"
         android:label="fragment_calendar"
         tools:layout="@layout/fragment_calendar" />
     <fragment

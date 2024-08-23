@@ -43,8 +43,6 @@ private  Context context;
     }
 
 
-
-
     @Override
 public void onPlanIconClicked(Meals meal, long selectedDate) {
     String date = new java.text.SimpleDateFormat("dd/MM/yyyy", java.util.Locale.getDefault()).format(new java.util.Date(selectedDate));

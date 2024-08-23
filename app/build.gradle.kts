@@ -35,6 +35,7 @@ android {
 }
 
 dependencies {
+    implementation("com.prolificinteractive:material-calendarview:2.0.0")
     implementation ("androidx.navigation:navigation-fragment-ktx:2.7.1")
     implementation ("androidx.navigation:navigation-ui-ktx:2.7.1")
     implementation("com.squareup.retrofit2:adapter-rxjava2:2.11.0")

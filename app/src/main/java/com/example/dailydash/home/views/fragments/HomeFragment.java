@@ -52,8 +52,6 @@ public class HomeFragment extends Fragment implements CategoryListAdapter.Catego
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
 
-        // Initialize RecyclerViews
-
         categoryRecyclerView = view.findViewById(R.id.categoryRecycle);
         mealsRecyclerView = view.findViewById(R.id.menuRecycle);
         constraintLayout = view.findViewById(R.id.constraintLayoutRandom);
