@@ -1,72 +1,122 @@
 package com.example.dailydash.home.presenter;
 
-import static java.security.AccessController.getContext;
 
 import android.content.Context;
+import android.util.Log;
 import android.widget.ImageButton;
 
 import com.example.dailydash.home.data.database.FavoriteMeal;
 import com.example.dailydash.home.data.models.Meals;
 import com.example.dailydash.home.data.repo.Repository;
 import com.example.dailydash.home.views.Utility.FavoriteUtils;
-import com.example.dailydash.home.views.interfaces.DetailsMealsView;
+import com.example.dailydash.home.views.interfaces.DetailsMealsContract;
 import com.example.dailydash.planer.data.Repository.MealPlanRepository;
 import com.example.dailydash.planer.data.database.MealPlan;
 
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
-import io.reactivex.rxjava3.core.Scheduler;
+import io.reactivex.rxjava3.observers.DisposableCompletableObserver;
+import io.reactivex.rxjava3.observers.DisposableMaybeObserver;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 
 import io.reactivex.rxjava3.disposables.CompositeDisposable;
-import io.reactivex.rxjava3.disposables.Disposable;
 
-public class DetailsMealsPresenter {
+public class DetailsMealsPresenter implements DetailsMealsContract.Presenter {
+private  Context context;
+    private DetailsMealsContract.View view;
+    private MealPlanRepository mealPlanRepository;
+    private Repository repository;
+    private CompositeDisposable compositeDisposable;
 
-    private final DetailsMealsView detailsMealsView;
-    private final Repository repository;
-    private final MealPlanRepository mealPlanRepository;
-    private final CompositeDisposable compositeDisposable = new CompositeDisposable();
-
-    public DetailsMealsPresenter(DetailsMealsView detailsMealsView, Context context) {
-        this.detailsMealsView = detailsMealsView;
-        this.repository = Repository.getInstance(context.getApplicationContext());
-        this.mealPlanRepository = MealPlanRepository.getInstance(context.getApplicationContext());
+    public DetailsMealsPresenter(DetailsMealsContract.View view, Context context) {
+        this.view = view;
+        this.context = context;
+        this.mealPlanRepository = MealPlanRepository.getInstance(context);
+        this.repository = Repository.getInstance(context);
+        this.compositeDisposable = new CompositeDisposable();
     }
 
-    public void toggleFavorite(Meals meal, ImageButton favIcon, Context context) {
-        FavoriteMeal favMeal = new FavoriteMeal(meal.getStrMeal(), meal.getStrMealThumb(), "hbjh", meal.getIdMeal());
-        FavoriteUtils.toggleFavorite(favIcon, favMeal, repository, context.getApplicationContext());
+    @Override
+    public void onFavoriteClicked(Meals meal, ImageButton favIcon) {
+        FavoriteMeal favMeal = new FavoriteMeal(meal.getStrMeal(), meal.getStrMealThumb(), "userId", meal.getIdMeal());
+        FavoriteUtils.toggleFavorite(favIcon, favMeal, repository, context); // Use context here
+
     }
 
-    public void addMealToPlan(Meals meal, long selectedDate) {
-        String date = new java.text.SimpleDateFormat("dd/MM/yyyy", java.util.Locale.getDefault()).format(new java.util.Date(selectedDate));
 
-        Disposable disposable = mealPlanRepository.getMealPlanByDate(date)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(
-                        existingMealPlan -> {
-                            if (existingMealPlan != null) {
-                                detailsMealsView.showMealDialog(existingMealPlan);
-                            } else {
-                                MealPlan mealPlan = new MealPlan(meal.getIdMeal(), meal.getStrMealThumb(), meal.getStrMeal(), date, "hbjh");
-                                mealPlanRepository.insertMealPlan(mealPlan)
-                                        .subscribeOn(Schedulers.io())
-                                        .observeOn(AndroidSchedulers.mainThread())
-                                        .subscribe(
-                                                () -> detailsMealsView.showMealsPlanAddedMessage(),
-                                                throwable -> detailsMealsView.showError(throwable.getMessage())
-                                        );
-                            }
-                        },
-                        throwable -> detailsMealsView.showError(throwable.getMessage())
-                );
 
-        compositeDisposable.add(disposable);
-    }
 
-    public void cleanup() {
-        // Dispose of all subscriptions when the presenter is no longer needed
+    @Override
+public void onPlanIconClicked(Meals meal, long selectedDate) {
+    String date = new java.text.SimpleDateFormat("dd/MM/yyyy", java.util.Locale.getDefault()).format(new java.util.Date(selectedDate));
+    compositeDisposable.add(
+            mealPlanRepository.getMealPlanByDate(date)
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribeWith(new DisposableMaybeObserver<MealPlan>() {
+                        @Override
+                        public void onSuccess(MealPlan existingMealPlan) {
+                            view.showMealDialog(existingMealPlan);
+                        }
+
+                        @Override
+                        public void onComplete() {
+                            addMealToPlan(meal, date);
+                        }
+
+                        @Override
+                        public void onError(Throwable e) {
+                            Log.e("DetailsMealsPresenter", "Error fetching meal plan", e);
+                            view.showError("Error fetching meal plan");
+                        }
+                    })
+    );
+}
+
+private void addMealToPlan(Meals meal, String date) {
+    MealPlan mealPlan = new MealPlan(meal.getIdMeal(), meal.getStrMealThumb(), meal.getStrMeal(), date, "hbjh");
+
+    compositeDisposable.add(
+            mealPlanRepository.insertMealPlan(mealPlan)
+                            .subscribeOn(Schedulers.io())
+                            .observeOn(AndroidSchedulers.mainThread())
+                            .subscribeWith(new DisposableCompletableObserver() {
+                                @Override
+                                public void onComplete() {
+                                    view.showAddedToPlanMessage();
+                                }
+
+                                @Override
+                                public void onError(Throwable e) {
+                                    Log.e("DetailsMealsPresenter", "Error adding meal to plan", e);
+                                    view.showError("Error adding meal to plan");
+                                }
+                            })
+            );
+}
+
+public void deleteMealPlan(MealPlan mealPlan) {
+    compositeDisposable.add(
+            mealPlanRepository.deleteMealPlan(mealPlan)
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribeWith(new DisposableCompletableObserver() {
+                        @Override
+                        public void onComplete() {
+                            view.showAddedToPlanMessage();
+                        }
+
+                        @Override
+                        public void onError(Throwable e) {
+                            Log.e("DetailsMealsPresenter", "Error deleting meal plan", e);
+                            view.showError("Error deleting meal plan");
+                        }
+                    })
+    );
+}
+
+public void clear() {
+    if (compositeDisposable != null && !compositeDisposable.isDisposed()) {
         compositeDisposable.clear();
     }
+}
 }

@@ -16,9 +16,7 @@ import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 
 import java.util.concurrent.atomic.AtomicBoolean;
-
 public class FavoriteUtils {
-// FavoriteUtils.java
 
     @SuppressLint("CheckResult")
     public static void toggleFavorite(ImageButton favIcon, FavoriteMeal favMeal, Repository repository, Context context) {
@@ -26,25 +24,22 @@ public class FavoriteUtils {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(isFavorite -> {
                     if (isFavorite) {
-                        // Remove from favorites
                         repository.removeFavoriteMeal(favMeal)
                                 .subscribeOn(Schedulers.io())
                                 .observeOn(AndroidSchedulers.mainThread())
                                 .subscribe(() -> {
-                                    favIcon.setColorFilter(ContextCompat.getColor(context, R.color.LightGreen)); // Reset color
+                                    favIcon.setColorFilter(ContextCompat.getColor(context, R.color.LightGreen));
                                     Toast.makeText(context, "Removed from favorites", Toast.LENGTH_SHORT).show();
                                 });
                     } else {
-                        // Add to favorites
                         repository.addFavoriteMeal(favMeal)
                                 .subscribeOn(Schedulers.io())
                                 .observeOn(AndroidSchedulers.mainThread())
                                 .subscribe(() -> {
-                                    favIcon.setColorFilter(ContextCompat.getColor(context, R.color.red)); // Fill with red
+                                    favIcon.setColorFilter(ContextCompat.getColor(context, R.color.red));
                                     Toast.makeText(context, "Added to favorites", Toast.LENGTH_SHORT).show();
                                 });
                     }
                 });
     }
-
 }
