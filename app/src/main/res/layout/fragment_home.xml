@@ -4,8 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
-    android:backgroundTint="@color/white"
+    android:background="@color/backGround"
     tools:context=".home.views.fragments.HomeFragment">
 
     <LinearLayout
@@ -36,44 +35,26 @@
                 android:id="@+id/constraintLayoutRandom"
                 android:layout_width="match_parent"
                 android:layout_height="300dp"
+                android:clickable="true"
                 >
 
                 <TextView
                     android:id="@+id/nameOfMeal"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="top"
+                    android:layout_gravity="bottom"
                     android:layout_marginStart="8dp"
                     android:layout_marginTop="60dp"
-                    android:background="@drawable/roundedbackground"
                     android:fontFamily="@font/poppins"
                     android:padding="10dp"
+                    android:background="#43E7F0DC"
                     android:text="@string/name_of_meal"
                     android:textColor="@color/darkGreen"
                     android:textSize="24sp" />
 
-                <TextView
-                    android:id="@+id/cookNow"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="bottom"
-                    android:layout_marginStart="220dp"
-                    android:background="@drawable/roundedbackground"
-                    android:clickable="true"
-                    android:focusable="true"
-                    android:fontFamily="@font/poppins"
-                    android:text="@string/cook_now"
-                    android:textColor="@color/darkGreen"
-                    android:textSize="18sp"
-                    android:textStyle="bold" />
 
-                <ImageView
-                    android:id="@+id/favIcon"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="bottom"
-                    android:layout_marginStart="335dp"
-                    android:src="@android:drawable/star_off" />
+
+
 
             </FrameLayout>
 

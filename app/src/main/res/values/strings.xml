@@ -29,4 +29,8 @@
     </string>
     <string name="name_of_meal">Name of Meal</string>
     <string name="ready_for_a_delicious_meal_today">Ready for a Delicious Meal Today !</string>
+    <string name="instructios">Instructios</string>
+    <string name="ingredients">Ingredients</string>
+    <string name="video_of_preparation">Video of preparation</string>
+    <string name="meal_title">Meal Title</string>
 </resources>

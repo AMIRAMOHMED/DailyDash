@@ -5,7 +5,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:padding="16dp">
+    android:paddingTop="30dp"
+    android:paddingHorizontal="20dp"
+   >
 
 
     <EditText
@@ -36,6 +38,8 @@
 
         <com.google.android.material.chip.Chip
             android:id="@+id/categories"
+            android:backgroundTint="@color/white"
+android:textColor="@color/LighterGreen"
             android:checked="true"
             style="@style/Widget.MaterialComponents.Chip.Filter"
             android:layout_width="wrap_content"
@@ -44,13 +48,21 @@
 
         <com.google.android.material.chip.Chip
             android:id="@+id/countary"
+            android:textColor="@color/LighterGreen"
+
+            android:backgroundTint="@color/white"
             style="@style/Widget.MaterialComponents.Chip.Filter"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:background="@color/backGround"
+
             android:text="Countary" />
 
         <com.google.android.material.chip.Chip
             android:id="@+id/ingredient"
+            android:backgroundTint="@color/white"
+            android:textColor="@color/LighterGreen"
+
             style="@style/Widget.MaterialComponents.Chip.Filter"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -59,6 +71,7 @@
     </com.google.android.material.chip.ChipGroup>
 
     <androidx.recyclerview.widget.RecyclerView
+        android:layout_gravity="center"
         android:id="@+id/recyclerView"
         android:layout_width="match_parent"
         android:layout_height="0dp"

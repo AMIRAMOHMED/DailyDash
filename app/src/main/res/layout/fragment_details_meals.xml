@@ -4,9 +4,10 @@ xmlns:app="http://schemas.android.com/apk/res-auto"
 xmlns:tools="http://schemas.android.com/tools"
 android:layout_width="match_parent"
 android:layout_height="match_parent"
-android:background="@color/white"
+android:background="@color/darkGreen"
 android:layout_marginTop="18dp"
-android:padding="16dp">
+
+>
 
 <LinearLayout
     android:layout_width="match_parent"
@@ -17,42 +18,82 @@ android:padding="16dp">
     <ImageView
         android:id="@+id/mealImage"
         android:layout_width="match_parent"
-        android:layout_height="200dp"
+        android:layout_height="280dp"
         android:scaleType="centerCrop"
         android:layout_marginBottom="16dp"
 
       />
-
-    <!-- Meal Title -->
-    <TextView
-        android:id="@+id/mealTitle"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
-        android:fontFamily="@font/poppins"
-        android:gravity="center"
-        android:paddingTop="8dp"
-        android:text="Meal Title"
-        android:textColor="@color/black"
-        android:textSize="36sp"
-        android:textStyle="bold" />
-    <!-- Ingredients Title -->
+        android:orientation="horizontal"
+        android:layout_marginBottom="5dp"
+
+        >
+
+        <TextView
+            android:layout_marginStart="10dp"
+
+            android:id="@+id/mealTitle"
+            android:layout_width="300dp"
+            android:layout_height="match_parent"
+            android:fontFamily="@font/poppins"
+            android:gravity="start"
+            android:text="@string/meal_title"
+            android:textColor="@color/backGround"
+            android:textSize="28sp"
+
+
+            android:layout_marginEnd="10dp"
+            android:textStyle="bold" />
+
+        <ImageButton
+
+            android:layout_height="50dp"
+            android:layout_width="40dp"
+            android:layout_gravity="end"
+            android:layout_marginRight="10dp"
+            android:background="@drawable/rectangle"
+            android:src="@drawable/favorite"
+            app:tint="@color/darkGreen"
+            android:id="@+id/favIcon"
+            />
+
+        <ImageButton
+
+            android:layout_height="50dp"
+            android:layout_width="40dp"
+            android:layout_gravity="end"
+            android:layout_marginRight="10dp"
+            android:background="@drawable/rectangle"
+            android:src="@drawable/calendar"
+            app:tint="@color/darkGreen"
+            android:id="@+id/calenderIcon"
+            />
+
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/round_back"
+
+        android:orientation="vertical">
+
     <TextView
         android:id="@+id/ingredientTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="4dp"
         android:fontFamily="@font/poppins"
-        android:gravity="center"
-        android:paddingTop="16dp"
-        android:text="Ingredients"
+        android:layout_marginTop="10dp"
+        android:gravity="start"
+        android:layout_marginStart="20dp"
+        android:text="@string/ingredients"
         android:textColor="@color/darkGreen"
-        android:textSize="28dp"
+        android:textSize="24sp"
         android:textStyle="bold" />
 
-    <!-- Horizontal RecyclerView for Ingredients -->
-
-    <!-- Instructions Title -->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/ingredientRecyclerView"
         android:layout_width="match_parent"
@@ -62,77 +103,59 @@ android:padding="16dp">
         android:paddingTop="8dp" />
 
     <TextView
-        android:id="@+id/instructionTitle"
+
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
+        android:layout_marginBottom="4dp"
         android:fontFamily="@font/poppins"
-        android:gravity="center"
-        android:paddingTop="16dp"
-        android:text="Instructions"
+        android:layout_marginTop="10dp"
+        android:gravity="start"
+        android:layout_marginStart="20dp"
+        android:text="@string/instructios"
         android:textColor="@color/darkGreen"
-        android:textSize="24dp" />
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:id="@+id/instructionTitle"
+
+     />
 
     <!-- Instructions Content -->
     <TextView
         android:id="@+id/instructions"
+        android:layout_marginStart="25dp"
+
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
         android:paddingTop="8dp"
-        android:text="Step-by-step instructions go here."
         android:textColor="@color/LighterGreen"
-        android:textSize="16sp" />
+        android:textSize="18sp" />
 
     <!-- Video Title -->
     <TextView
-        android:id="@+id/videoTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
+        android:layout_marginBottom="4dp"
         android:fontFamily="@font/poppins"
-        android:paddingTop="16dp"
-        android:text="Video of preparation method"
-        android:gravity="center"
+        android:layout_marginTop="10dp"
+        android:gravity="start"
+        android:layout_marginStart="20dp"
         android:textColor="@color/darkGreen"
         android:textSize="24sp"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        android:id="@+id/videoTitle"
+
+        android:text="@string/video_of_preparation"
+        />
 
     <!-- Video View -->
     <VideoView
-        android:id="@+id/mealVideo"
+        android:id="@+id/videoView"
         android:layout_width="match_parent"
         android:layout_height="200dp"
         android:layout_marginBottom="16dp"/>
 
     <!-- Buttons (Add to Calendar & Add to Favorites) -->
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:gravity="center"
-        android:paddingTop="8dp"
-        android:layout_marginBottom="16dp">
-
-        <ImageButton
-            android:id="@+id/favIcon"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:backgroundTint="@android:color/transparent"
-            app:srcCompat="@drawable/favorite" />
-
-        <ImageButton
-            android:layout_weight="1"
-
-            android:id="@+id/calenderIcon"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:backgroundTint="@android:color/transparent"
-            app:icon="@drawable/calendar"
-            app:iconPadding="8dp"
-
-            android:layout_marginEnd="8dp" />
 
     </LinearLayout>
 </LinearLayout>

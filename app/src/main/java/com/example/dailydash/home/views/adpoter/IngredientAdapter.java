@@ -10,6 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.dailydash.R;
 import com.example.dailydash.home.data.models.Ingredient;
 
@@ -36,6 +37,9 @@ public class IngredientAdapter extends RecyclerView.Adapter<IngredientAdapter.In
     public void onBindViewHolder(@NonNull IngredientViewHolder holder, int position) {
         Ingredient ingredient = ingredientList.get(position);
         holder.ingredientName.setText(ingredient.getName());
+        Glide.with(holder.ingredientImage.getContext())
+                .load("https://www.themealdb.com/images/ingredients/" + ingredient.getName() + "-Small.png")
+                .into(holder.ingredientImage);
     }
 
     @Override

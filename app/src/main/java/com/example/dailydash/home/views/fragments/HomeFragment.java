@@ -45,7 +45,7 @@ public class HomeFragment extends Fragment implements CategoryListAdapter.Catego
     private Repository repository;
     private CompositeDisposable compositeDisposable;
     private FrameLayout constraintLayout;
-    private TextView nameOfMeal,cookNow;
+    private TextView nameOfMeal;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -56,7 +56,6 @@ public class HomeFragment extends Fragment implements CategoryListAdapter.Catego
         mealsRecyclerView = view.findViewById(R.id.menuRecycle);
         constraintLayout = view.findViewById(R.id.constraintLayoutRandom);
         nameOfMeal = view.findViewById(R.id.nameOfMeal);
-        cookNow = view.findViewById(R.id.cookNow);
 
 
         // Initialize adapters with empty data
@@ -98,7 +97,7 @@ public class HomeFragment extends Fragment implements CategoryListAdapter.Catego
 
                     @Override
                     public void onError(Throwable e) {
-                        Log.i("Ammmira", "onError: "+ e);
+                        Log.i("HomeFragment", "onError: "+ e);
                         Toast.makeText(getContext(), "Error fetching meals", Toast.LENGTH_SHORT).show();
                     }
 
@@ -171,7 +170,7 @@ public class HomeFragment extends Fragment implements CategoryListAdapter.Catego
                     public void onNext(MealsResponse mealsResponse) {
                         if (mealsResponse != null && mealsResponse.getMeals() != null) {
                             nameOfMeal.setText(mealsResponse.getMeals().get(0).getStrMeal());
-                            cookNow.setOnClickListener(v -> {
+                            constraintLayout.setOnClickListener(v -> {
                                 com.example.dailydash.home.views.fragments.HomeFragmentDirections.ActionHomeFragmentToDetailsMeals action =
                                         HomeFragmentDirections.actionHomeFragmentToDetailsMeals(mealsResponse.getMeals().get(0));
                                 Navigation.findNavController(requireView()).navigate(action);

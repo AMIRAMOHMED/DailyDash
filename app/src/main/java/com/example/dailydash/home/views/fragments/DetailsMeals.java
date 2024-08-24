@@ -9,9 +9,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.VideoView;
 
+import com.bumptech.glide.Glide;
 import com.example.dailydash.R;
 import com.example.dailydash.home.data.models.Ingredient;
 import com.example.dailydash.home.data.models.Meals;
@@ -30,7 +33,9 @@ public class DetailsMeals extends Fragment implements DetailsMealsContract.View 
     private DetailsMealsContract.Presenter presenter;
     private ImageButton favIcon;
     private ImageButton planIcon;
-    private TextView textView;
+    private TextView textView,instructions;
+    private ImageView imageView;
+    private VideoView videoView;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -39,6 +44,10 @@ public class DetailsMeals extends Fragment implements DetailsMealsContract.View 
         textView = view.findViewById(R.id.mealTitle);
         favIcon = view.findViewById(R.id.favIcon);
         planIcon = view.findViewById(R.id.calenderIcon);
+        instructions = view.findViewById(R.id.instructions);
+        imageView = view.findViewById(R.id.mealImage);
+        videoView = view.findViewById(R.id.videoView);
+
 
         Context context = getContext();
         if (context != null) {
@@ -48,9 +57,15 @@ public class DetailsMeals extends Fragment implements DetailsMealsContract.View 
                 DetailsMealsArgs args = DetailsMealsArgs.fromBundle(getArguments());
                 Meals meal = args.getMeal();
                 textView.setText(meal.getStrMeal());
+                instructions.setText(meal.getStrInstructions());
+                Glide.with(context).load(meal.getStrMealThumb()).into(imageView);
+                if(meal.getStrYoutube() != null) {
+                    videoView.setVideoPath(meal.getStrYoutube());
+                    videoView.start();
 
+                }
                 List<Ingredient> ingredients = meal.getIngredients();
-                recyclerView.setLayoutManager(new LinearLayoutManager(context));
+                recyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
                 IngredientAdapter adapter = new IngredientAdapter(context, ingredients);
                 recyclerView.setAdapter(adapter);
 

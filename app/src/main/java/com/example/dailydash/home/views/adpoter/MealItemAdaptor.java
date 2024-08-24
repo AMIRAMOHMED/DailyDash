@@ -1,5 +1,7 @@
 package com.example.dailydash.home.views.adpoter;
 
+import static java.security.AccessController.getContext;
+
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
@@ -12,6 +14,7 @@ import com.bumptech.glide.request.transition.Transition;
 import androidx.annotation.Nullable;
 import androidx.annotation.NonNull;
 
+import androidx.cardview.widget.CardView;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
@@ -21,6 +24,7 @@ import com.bumptech.glide.Glide;
 
 import com.example.dailydash.R;
 import com.example.dailydash.home.data.models.Meals;
+import com.example.dailydash.home.views.Utility.FavoriteUtils;
 import com.example.dailydash.home.views.fragments.HomeFragment;
 import com.example.dailydash.home.views.fragments.HomeFragmentDirections;
 import com.example.dailydash.home.views.fragments.MealsFragment;
@@ -65,7 +69,7 @@ public class MealItemAdaptor extends RecyclerView.Adapter<MealItemAdaptor.MealVi
             }
         });
 
-        holder.favIcon.setImageResource(R.drawable.person);
+
         Glide.with(holder.itemView.getContext()) // Use the context from the ViewHolder
                 .load(meal.getStrMealThumb()) // Assuming 'getImageUrl()' returns the image URL from the Meals object
                 .into(new CustomTarget<Drawable>() { // Use a CustomTarget to set the background
@@ -91,7 +95,8 @@ public class MealItemAdaptor extends RecyclerView.Adapter<MealItemAdaptor.MealVi
     // ViewHolder class for meal items
     public static class MealViewHolder extends RecyclerView.ViewHolder {
 
-        TextView MealName, cookNow; // Views for meal name and cook now button
+        TextView MealName;
+               CardView cookNow; // Views for meal name and cook now button
         ImageView favIcon; // Favorite icon
         ConstraintLayout constraintLayout ;
 
