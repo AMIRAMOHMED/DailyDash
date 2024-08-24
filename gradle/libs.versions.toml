@@ -27,6 +27,7 @@ roomRuntime = "2.6.1"
 roomRxjava3 = "2.6.1"
 rxandroid = "3.0.0"
 rxandroidVersion = "3.0.2"
+rxbinding = "4.0.0"
 rxjava = "3.1.3"
 googleGmsGoogleServices = "4.4.2"
 firebaseAuth = "23.0.0"
@@ -66,6 +67,7 @@ room-rxjava3 = { module = "androidx.room:room-rxjava3", version.ref = "roomRxjav
 room-guava = { module = "androidx.room:room-guava", version.ref = "roomGuava" }
 rxandroid = { module = "io.reactivex.rxjava3:rxandroid", version.ref = "rxandroid" }
 rxandroid-v302 = { module = "io.reactivex.rxjava3:rxandroid", version.ref = "rxandroidVersion" }
+rxbinding = { module = "com.jakewharton.rxbinding4:rxbinding", version.ref = "rxbinding" }
 rxjava = { module = "io.reactivex.rxjava3:rxjava", version.ref = "rxjava" }
 firebase-auth = { group = "com.google.firebase", name = "firebase-auth", version.ref = "firebaseAuth" }
 legacy-support-v4 = { group = "androidx.legacy", name = "legacy-support-v4", version.ref = "legacySupportV4" }

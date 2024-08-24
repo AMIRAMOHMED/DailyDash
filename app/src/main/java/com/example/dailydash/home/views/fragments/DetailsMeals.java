@@ -91,19 +91,7 @@ mealPlanRepository = MealPlanRepository.getInstance(getContext());
                     materialDatePicker.addOnPositiveButtonClickListener(selection -> {
                         long selectedDate = selection;
                         presenter.onPlanIconClicked(meal, selectedDate);
-
-//                        mealPlanRepository.addMealPlan(mealPlan)
-//                                .subscribeOn(Schedulers.io())
-//                                .observeOn(AndroidSchedulers.mainThread())
-//                                .subscribe(
-//                                        () -> Toast.makeText(getContext(), "Meal added!", Toast.LENGTH_SHORT).show(),
-//                                        throwable -> Toast.makeText(getContext(), "Failed to add meal: " + throwable.getMessage(), Toast.LENGTH_SHORT).show()
-//                                );
-
-
-
                     });
-
                     materialDatePicker.show(getParentFragmentManager(), "DATE_PICKER");
                 });
             }

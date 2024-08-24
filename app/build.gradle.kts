@@ -49,6 +49,7 @@ dependencies {
     implementation(libs.navigation.ui.ktx)
 
     // RxJava
+    implementation (libs.rxbinding)
     implementation(libs.rxandroid)
     implementation(libs.rxjava.v315)
     implementation(libs.adapter.rxjava3)

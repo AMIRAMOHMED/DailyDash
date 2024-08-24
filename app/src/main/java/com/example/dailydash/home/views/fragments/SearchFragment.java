@@ -4,12 +4,9 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.Toast;
 
-import io.reactivex.rxjava3.annotations.NonNull;
-import io.reactivex.rxjava3.disposables.CompositeDisposable;
-import io.reactivex.rxjava3.observers.DisposableObserver;
-import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -24,9 +21,16 @@ import com.example.dailydash.home.data.models.IngredientS;
 import com.example.dailydash.home.data.repo.Repository;
 import com.example.dailydash.home.views.adpoter.SearchAdapter;
 import com.google.android.material.chip.Chip;
+import com.jakewharton.rxbinding4.widget.RxTextView;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
+
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
+import io.reactivex.rxjava3.annotations.NonNull;
+import io.reactivex.rxjava3.disposables.CompositeDisposable;
+import io.reactivex.rxjava3.observers.DisposableObserver;
 
 public class SearchFragment extends Fragment {
 
@@ -35,6 +39,7 @@ public class SearchFragment extends Fragment {
     private Repository repo;
     private SearchAdapter adapter;
     private CompositeDisposable compositeDisposable = new CompositeDisposable();
+    EditText search;
 
     // Keep these as lists of the correct response type
     private List<Category> categoriesResponseList = new ArrayList<>();
@@ -51,6 +56,7 @@ public class SearchFragment extends Fragment {
         country = view.findViewById(R.id.countary);
         ingredient = view.findViewById(R.id.ingredient);
 
+        search = view.findViewById(R.id.searchBar);
         repo = Repository.getInstance(getContext());
 
         // Initialize adapter
@@ -59,12 +65,66 @@ public class SearchFragment extends Fragment {
         searchRecyclerView.setAdapter(adapter);
 
         setupChipListeners();
-
+        observeSearchText();
         fetchIngredients();
         fetchAreas();
         fetchCategories();
 
         return view;
+    }
+    private void observeSearchText() {
+        compositeDisposable.add(
+                RxTextView.textChanges(search)
+                        .debounce(300, TimeUnit.MILLISECONDS) // Add a debounce to avoid too many updates
+                        .map(CharSequence::toString)
+                        .distinctUntilChanged()
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(this::filterResults)
+        );
+    }
+
+    private void filterResults(String query) {
+        List<Object> filteredList = new ArrayList<>();
+
+        if (categories.isChecked()) {
+            filteredList.addAll(filterCategories(query));
+        } else if (country.isChecked()) {
+            filteredList.addAll(filterAreas(query));
+        } else if (ingredient.isChecked()) {
+            filteredList.addAll(filterIngredients(query));
+        }
+
+        adapter.updateData(filteredList);
+    }
+
+    private List<Category> filterCategories(String query) {
+        List<Category> filteredCategories = new ArrayList<>();
+        for (Category category : categoriesResponseList) {
+            if (category.getStrCategory().toLowerCase().startsWith(query.toLowerCase())) {
+                filteredCategories.add(category);
+            }
+        }
+        return filteredCategories;
+    }
+
+    private List<Area> filterAreas(String query) {
+        List<Area> filteredAreas = new ArrayList<>();
+        for (Area area : areaResponseList) {
+            if (area.getStrArea().toLowerCase().startsWith(query.toLowerCase())) {
+                filteredAreas.add(area);
+            }
+        }
+        return filteredAreas;
+    }
+
+    private List<IngredientS> filterIngredients(String query) {
+        List<IngredientS> filteredIngredients = new ArrayList<>();
+        for (IngredientS ingredient : ingredientResponseList) {
+            if (ingredient.getStrIngredient().toLowerCase().startsWith(query.toLowerCase())) {
+                filteredIngredients.add(ingredient);
+            }
+        }
+        return filteredIngredients;
     }
 
     private void fetchIngredients() {
@@ -77,6 +137,7 @@ public class SearchFragment extends Fragment {
                             public void onNext(@NonNull IngredientResponse ingredientResponse) {
                                 if (ingredientResponse != null && ingredientResponse.getIngredients() != null) {
                                     ingredientResponseList = ingredientResponse.getIngredients();
+
                                     adapter.updateData(new ArrayList<>(ingredientResponseList));
                                 }
                             }
