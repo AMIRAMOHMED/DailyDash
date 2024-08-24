@@ -1,10 +1,7 @@
 package com.example.dailydash.home.views.fragments;
+
 import android.content.Context;
 import android.os.Bundle;
-import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +9,13 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.bumptech.glide.Glide;
 import com.example.dailydash.R;
 import com.example.dailydash.home.data.models.Ingredient;
@@ -19,13 +23,13 @@ import com.example.dailydash.home.data.models.Meals;
 import com.example.dailydash.home.presenter.DetailsMealsPresenter;
 import com.example.dailydash.home.views.adpoter.IngredientAdapter;
 import com.example.dailydash.home.views.interfaces.DetailsMealsContract;
+import com.example.dailydash.planer.data.Repository.MealPlanRepository;
 import com.example.dailydash.planer.data.database.MealPlan;
 import com.google.android.material.datepicker.MaterialDatePicker;
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer;
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener;
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView;
 
-import androidx.appcompat.app.AlertDialog;
 import java.util.List;
 
 
@@ -37,6 +41,7 @@ public class DetailsMeals extends Fragment implements DetailsMealsContract.View 
     private TextView textView,instructions;
     private ImageView imageView;
     private YouTubePlayerView videoView;
+    MealPlanRepository mealPlanRepository;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -48,7 +53,7 @@ public class DetailsMeals extends Fragment implements DetailsMealsContract.View 
         instructions = view.findViewById(R.id.instructions);
         imageView = view.findViewById(R.id.mealImage);
         videoView = view.findViewById(R.id.videoView);
-
+mealPlanRepository = MealPlanRepository.getInstance(getContext());
 
         Context context = getContext();
         if (context != null) {
@@ -86,6 +91,17 @@ public class DetailsMeals extends Fragment implements DetailsMealsContract.View 
                     materialDatePicker.addOnPositiveButtonClickListener(selection -> {
                         long selectedDate = selection;
                         presenter.onPlanIconClicked(meal, selectedDate);
+
+//                        mealPlanRepository.addMealPlan(mealPlan)
+//                                .subscribeOn(Schedulers.io())
+//                                .observeOn(AndroidSchedulers.mainThread())
+//                                .subscribe(
+//                                        () -> Toast.makeText(getContext(), "Meal added!", Toast.LENGTH_SHORT).show(),
+//                                        throwable -> Toast.makeText(getContext(), "Failed to add meal: " + throwable.getMessage(), Toast.LENGTH_SHORT).show()
+//                                );
+
+
+
                     });
 
                     materialDatePicker.show(getParentFragmentManager(), "DATE_PICKER");

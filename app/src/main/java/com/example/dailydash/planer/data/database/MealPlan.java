@@ -12,6 +12,7 @@ public class MealPlan {
     private String mealName;
     private String date;
     private  String userId;
+    public MealPlan() {}
 
     public MealPlan(String mealId, String mealImg, String mealName, String date, String userId) {
         this.mealId = mealId;

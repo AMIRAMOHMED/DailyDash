@@ -4,7 +4,6 @@ package com.example.dailydash.home.presenter;
 import android.content.Context;
 import android.util.Log;
 import android.widget.ImageButton;
-import android.widget.TextView;
 
 import com.example.dailydash.home.data.database.FavoriteMeal;
 import com.example.dailydash.home.data.models.Meals;
@@ -15,11 +14,10 @@ import com.example.dailydash.planer.data.Repository.MealPlanRepository;
 import com.example.dailydash.planer.data.database.MealPlan;
 
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
+import io.reactivex.rxjava3.disposables.CompositeDisposable;
 import io.reactivex.rxjava3.observers.DisposableCompletableObserver;
 import io.reactivex.rxjava3.observers.DisposableMaybeObserver;
 import io.reactivex.rxjava3.schedulers.Schedulers;
-
-import io.reactivex.rxjava3.disposables.CompositeDisposable;
 
 public class DetailsMealsPresenter implements DetailsMealsContract.Presenter {
 private  Context context;
@@ -27,6 +25,7 @@ private  Context context;
     private MealPlanRepository mealPlanRepository;
     private Repository repository;
     private CompositeDisposable compositeDisposable;
+
 
     public DetailsMealsPresenter(DetailsMealsContract.View view, Context context) {
         this.view = view;

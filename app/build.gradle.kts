@@ -35,39 +35,54 @@ android {
 }
 
 dependencies {
+    // Firebase
+    implementation(platform("com.google.firebase:firebase-bom:33.2.0"))
+
+    implementation("com.google.firebase:firebase-firestore")
+    implementation("com.google.firebase:firebase-auth")
+
+    // Google Play Services
     implementation(libs.play.services.auth)
-    implementation (libs.navigation.fragment.ktx)
-    implementation (libs.navigation.ui.ktx)
-    implementation(libs.adapter.rxjava2)
-    implementation (libs.retrofit)
-    implementation (libs.converter.gson)
+
+    // Navigation
+    implementation(libs.navigation.fragment.ktx)
+    implementation(libs.navigation.ui.ktx)
+
+    // RxJava
+    implementation(libs.rxandroid)
+    implementation(libs.rxjava.v315)
+    implementation(libs.adapter.rxjava3)
+    implementation(libs.room.rxjava3)
+
+    // Retrofit
+    implementation(libs.retrofit)
+    implementation(libs.converter.gson)
+
+    // Image Loading
     implementation(libs.glide)
     implementation(libs.circleimageview)
-    implementation(libs.rxandroid)
+
+    // Lottie
     implementation(libs.lottie)
+
+    // Material Design
     implementation(libs.material)
+
+    // Support Libraries
     implementation(libs.appcompat)
-    implementation(libs.constraintlayout)
-    implementation(libs.rxandroid.v302)
-    implementation(libs.firebase.auth)
-    implementation(libs.rxjava.v315)
-    implementation(libs.appcompat)
-    implementation(libs.material)
-    implementation(libs.activity)
-    implementation (libs.navigation.fragment)
-    implementation (libs.navigation.ui)
     implementation(libs.constraintlayout)
     implementation(libs.legacy.support.v4)
-    implementation(libs.navigation.fragment)
-    implementation(libs.navigation.ui)
+
+    // Room
+    implementation(libs.room.runtime)
+    annotationProcessor(libs.room.compiler)
+    implementation(libs.room.guava)
+
+    // Core
+    implementation(libs.core)
+
+    // Testing
     testImplementation(libs.junit)
-     implementation( libs.adapter.rxjava3)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
-    implementation (libs.room.runtime)
-    annotationProcessor (libs.room.compiler)
-    implementation (libs.room.rxjava3)
-    implementation (libs.room.guava)
-    implementation (libs.core)
-
 }
