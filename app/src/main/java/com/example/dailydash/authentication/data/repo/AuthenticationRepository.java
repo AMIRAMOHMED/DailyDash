@@ -34,6 +34,13 @@ public class AuthenticationRepository {
                 .addOnCompleteListener(listener);
     }
 
+
+    public  void logOut() {
+        firebaseAuthenticatoin.logOut();
+    }
+
+
+    //shared preferences
     public void addLoginToPreferences(boolean isLogin) {
         sharedPreferences.setLoginState(isLogin);
     }
@@ -47,6 +54,9 @@ public class AuthenticationRepository {
 
     public String readUserIdFromPreferences(){
         return sharedPreferences.getUserId();
+    }
+    public void deleteUserIdFromPreferences(){
+        sharedPreferences.setUserId("");
     }
 
 }

@@ -1,6 +1,7 @@
 package com.example.dailydash.planer.data.Repository;
 
 import android.content.Context;
+import android.database.sqlite.SQLiteConstraintException;
 
 import com.example.dailydash.planer.data.database.MealPlan;
 import com.example.dailydash.planer.data.database.MealPlanDatabase;
@@ -43,10 +44,16 @@ public class MealPlanRepository {
         return mealPlanDatabase.mealPlanDao().insertMealPlan(mealPlan);
     }
 
-    // Fetch all MealPlans
-    public Flowable<List<MealPlan>> getAllMealPlans() {
-        return mealPlanDatabase.mealPlanDao().getAllMealPlans();
+    public Completable insertOrUpdateMealPlan(MealPlan mealPlan) {
+        return mealPlanDatabase.mealPlanDao().insertMealPlan(mealPlan)
+                .onErrorResumeNext(throwable -> {
+                    if (throwable instanceof SQLiteConstraintException) {
+                        return mealPlanDatabase.mealPlanDao().updateMealPlan(mealPlan);
+                    }
+                    return Completable.error(throwable);
+                });
     }
+
 
     // Delete a specific MealPlan
     public Completable deleteMealPlan(MealPlan mealPlan) {
@@ -71,7 +78,9 @@ public class MealPlanRepository {
     }
     //fetch meal plans
 
-    public Single<List<MealPlan>> fetchMealPlans() {
+    public Single<List<MealPlan>> fetchMealPlans(
+
+    ) {
         return firebaseManager.fetchMealPlans();
     }
 //remove meal plan

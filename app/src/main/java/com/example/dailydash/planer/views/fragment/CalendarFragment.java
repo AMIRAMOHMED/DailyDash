@@ -1,16 +1,20 @@
 package com.example.dailydash.planer.views.fragment;
+
 import android.app.AlertDialog;
 import android.os.Bundle;
-import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CalendarView;
 import android.widget.Toast;
+
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.example.dailydash.R;
+import com.example.dailydash.authentication.data.repo.AuthenticationRepository;
 import com.example.dailydash.planer.data.Repository.MealPlanRepository;
 import com.example.dailydash.planer.data.database.MealPlan;
 import com.example.dailydash.planer.views.adpoters.PlanedMealAdapter;
@@ -45,14 +49,16 @@ private Calendar calendar;
         mealPlanRepository = MealPlanRepository.getInstance(getContext());
         compositeDisposable = new CompositeDisposable();
         calendar = Calendar.getInstance();
+         AuthenticationRepository authReop= AuthenticationRepository.getInstance(getContext());
 
 
         planedMealAdapter = new PlanedMealAdapter(new ArrayList<>(),this);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setAdapter(planedMealAdapter);
+        String userId = authReop.readUserIdFromPreferences();
 
         compositeDisposable.add(
-                mealPlanRepository.getAllMealPlans()
+                mealPlanRepository.getMealPlansByUser(userId)
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
                         .map(mealPlans -> {
@@ -134,15 +140,19 @@ private Calendar calendar;
                                     .subscribeWith(new DisposableCompletableObserver() {
                                         @Override
                                         public void onComplete() {
+                                            if (getActivity() != null) {
+
                                             // Handle successful deletion
                                             Toast.makeText(getContext(), "Meal plan deleted", Toast.LENGTH_SHORT).show();
-                                        }
+                                        }}
 
                                         @Override
                                         public void onError(Throwable e) {
                                             Log.e("CalendarFragment", "Error deleting meal plan", e);
+                                            if (getActivity() != null) {
+
                                             Toast.makeText(getContext(), "Error deleting meal plan", Toast.LENGTH_SHORT).show();
-                                        }
+                                        }}
                                     })
                     );
                 })

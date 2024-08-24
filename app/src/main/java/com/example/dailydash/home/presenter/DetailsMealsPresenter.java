@@ -40,7 +40,8 @@ private  Context context;
 
     @Override
     public void onFavoriteClicked(Meals meal, ImageButton favIcon) {
-       String userId = authReop.readUserIdFromPreferences();
+        String userId = authReop.readUserIdFromPreferences();
+
         FavoriteMeal favMeal = new FavoriteMeal(meal.getStrMeal(), meal.getStrMealThumb(), userId, meal.getIdMeal());
         FavoriteUtils.toggleFavorite(favIcon, favMeal, repository, context); // Use context here
 
@@ -75,7 +76,9 @@ public void onPlanIconClicked(Meals meal, long selectedDate) {
 }
 
 private void addMealToPlan(Meals meal, String date) {
-    MealPlan mealPlan = new MealPlan(meal.getIdMeal(), meal.getStrMealThumb(), meal.getStrMeal(), date, "hbjh");
+    String userId = authReop.readUserIdFromPreferences();
+
+    MealPlan mealPlan = new MealPlan(meal.getIdMeal(), meal.getStrMealThumb(), meal.getStrMeal(), date, userId);
 
     compositeDisposable.add(
             mealPlanRepository.insertMealPlan(mealPlan)

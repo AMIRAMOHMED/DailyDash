@@ -4,7 +4,7 @@ import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.Query;
-
+import androidx.room.Update;
 
 import java.util.List;
 
@@ -21,11 +21,10 @@ public interface MealPlanDao {
     @Query("SELECT * FROM meal_plan WHERE date = :date LIMIT 1")
     Maybe<MealPlan> getMealPlanByDate(String date);
 
-    @Query("SELECT * FROM meal_plan")
-    Flowable<List<MealPlan>> getAllMealPlans();
-
     @Delete
     Completable deleteMealPlan(MealPlan mealPlan);
+    @Update
+    Completable updateMealPlan(MealPlan mealPlan);
 
     @Query("DELETE FROM meal_plan WHERE date = :date")
     Completable deleteMealPlanByDate(String date);
