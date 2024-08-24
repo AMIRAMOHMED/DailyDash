@@ -1,17 +1,145 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/backGround"
-
+    android:orientation="vertical"
     tools:context=".home.views.fragments.ProfileFragment">
 
     <!-- TODO: Update blank fragment layout -->
     <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/appName"
+        android:fontFamily="@font/matemasie"
+        android:gravity="left"
+        android:layout_gravity="center"
+        android:paddingTop="50dp"
+        android:textSize="30sp"
+        android:textColor="@color/darkGreen"
+        />
+<ImageView
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:src="@drawable/onboarding2"
+/>
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center"
-        android:text="ProfileFragment" />
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center">
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
 
-</FrameLayout>
+            />
+        <TextView
+            android:id="@+id/backpu"
+            android:layout_width="0dp"
+            android:layout_height="100dp"
+            android:layout_weight="2"
+            android:background="@drawable/backup"
+            android:scaleType="centerInside"/>
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+
+            />
+
+        <TextView
+            android:id="@+id/restore"
+            android:layout_width="0dp"
+            android:layout_height="100dp"
+            android:layout_weight="2"
+            android:background="@drawable/restore"
+            android:scaleType="centerInside"/>
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+
+            />
+        <TextView
+            android:id="@+id/logout"
+            android:layout_width="0dp"
+            android:layout_height="100dp"
+            android:layout_weight="2"
+            android:background="@drawable/logout"
+            android:scaleType="centerInside"/>
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+
+            />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center">
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+
+            />
+        <TextView
+       android:text="@string/backup"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:fontFamily="@font/petrona"
+            android:textSize="24sp"
+            android:textColor="@color/LightGreen"
+            android:gravity="center"
+            android:scaleType="centerInside"/>
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+
+            />
+        <TextView
+            android:text="Restore"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:fontFamily="@font/petrona"
+            android:textSize="24sp"
+            android:textColor="@color/LightGreen"
+            android:gravity="center"
+            android:scaleType="centerInside"/>
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+
+            />
+        <TextView
+            android:text="@string/log_out"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:fontFamily="@font/petrona"
+            android:textSize="24sp"
+            android:textColor="@color/LightGreen"
+            android:gravity="center"
+            android:scaleType="centerInside"/>
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+
+            />
+    </LinearLayout>
+
+
+</LinearLayout>

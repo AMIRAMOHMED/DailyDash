@@ -36,4 +36,6 @@
     <string name="meal_title">Meal Title</string>
     <string name="meals">Meals:</string>
     <string name="appName">Daily Dash</string>
+    <string name="backup">Backup</string>
+    <string name="log_out">Log out</string>
 </resources>

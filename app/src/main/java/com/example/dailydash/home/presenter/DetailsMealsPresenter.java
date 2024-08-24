@@ -5,6 +5,7 @@ import android.content.Context;
 import android.util.Log;
 import android.widget.ImageButton;
 
+import com.example.dailydash.authentication.data.repo.AuthenticationRepository;
 import com.example.dailydash.home.data.database.FavoriteMeal;
 import com.example.dailydash.home.data.models.Meals;
 import com.example.dailydash.home.data.repo.Repository;
@@ -25,6 +26,7 @@ private  Context context;
     private MealPlanRepository mealPlanRepository;
     private Repository repository;
     private CompositeDisposable compositeDisposable;
+    private AuthenticationRepository authReop;
 
 
     public DetailsMealsPresenter(DetailsMealsContract.View view, Context context) {
@@ -33,11 +35,13 @@ private  Context context;
         this.mealPlanRepository = MealPlanRepository.getInstance(context);
         this.repository = Repository.getInstance(context);
         this.compositeDisposable = new CompositeDisposable();
+        this.authReop = AuthenticationRepository.getInstance(context);
     }
 
     @Override
     public void onFavoriteClicked(Meals meal, ImageButton favIcon) {
-        FavoriteMeal favMeal = new FavoriteMeal(meal.getStrMeal(), meal.getStrMealThumb(), "userId", meal.getIdMeal());
+       String userId = authReop.readUserIdFromPreferences();
+        FavoriteMeal favMeal = new FavoriteMeal(meal.getStrMeal(), meal.getStrMealThumb(), userId, meal.getIdMeal());
         FavoriteUtils.toggleFavorite(favIcon, favMeal, repository, context); // Use context here
 
     }

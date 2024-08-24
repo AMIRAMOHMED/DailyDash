@@ -4,6 +4,7 @@ import android.content.Context;
 
 import com.example.dailydash.authentication.BaseView;
 import com.example.dailydash.authentication.data.repo.AuthenticationRepository;
+import com.google.firebase.auth.FirebaseAuth;
 
 public class LoginPresenterImp implements  LoginPresenter{
     BaseView baseView;
@@ -17,10 +18,13 @@ public class LoginPresenterImp implements  LoginPresenter{
                 validateInput(email, password)) {
             baseView.showProgress();
             repo.logIn(email, password, task -> {
-                repo.addLoginToPreferences(true);
                 baseView.hideProgress();
 
                 if (task.isSuccessful()) {
+                    repo.addLoginToPreferences(true);
+
+                    String uid = FirebaseAuth.getInstance().getUid();
+                    repo.addedUserIdToPreferences(uid);
                     baseView.navigateToNextScreen();
                 } else {
                     baseView.showError(task.getException().getMessage());
