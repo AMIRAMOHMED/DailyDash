@@ -5,7 +5,8 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="@color/backGround"
-
+android:paddingTop="50dp"
+    android:paddingHorizontal="20dp"
     tools:context=".home.views.fragments.MealsFragment">
 
     <TextView
@@ -13,12 +14,20 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textColor="@color/darkGreen"
-        android:textSize="24sp"
-        android:textStyle="bold" />
+        android:textSize="28sp"
+        android:textStyle="bold"
+        android:fontFamily="@font/petrona"
+        android:text="@string/meals"
+
+        />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/mealRecycler"
+android:layout_marginTop="20dp"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+
+        />
 
 </LinearLayout>

@@ -1,5 +1,8 @@
 package com.example.dailydash.authentication.login.views;
 
+import static java.security.AccessController.getContext;
+
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -13,7 +16,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.airbnb.lottie.LottieAnimationView;
 import com.example.dailydash.R;
 import com.example.dailydash.authentication.BaseView;
-import com.example.dailydash.authentication.data.repo.Respiratory;
+import com.example.dailydash.authentication.data.repo.AuthenticationRepository;
 import com.example.dailydash.authentication.login.presenter.LoginPresenter;
 import com.example.dailydash.authentication.login.presenter.LoginPresenterImp;
 import com.example.dailydash.authentication.register.views.SignUp;
@@ -43,9 +46,8 @@ public class LoginActivity extends AppCompatActivity implements BaseView {
         signUp = findViewById(R.id.textButton2);
         googleButton = findViewById(R.id.imageView6);
         lottieAnimationView = findViewById(R.id.lottieAnimationView);
-
         // Initialize presenter
-        loginPresenter = new LoginPresenterImp(this,  new Respiratory(this));  // Assume you have a RepositoryImpl for the repo
+        loginPresenter = new LoginPresenterImp(this,this);
 
         // Sign in click handler
         signIn.setOnClickListener(v -> {
@@ -81,7 +83,7 @@ public class LoginActivity extends AppCompatActivity implements BaseView {
 
     @Override
     public void navigateToNextScreen() {
-//        startActivity(new Intent(this, HomeActivity.class));
-//        finish();
+        startActivity(new Intent(this, HomeActivity.class));
+        finish();
     }
 }

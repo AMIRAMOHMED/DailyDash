@@ -5,8 +5,6 @@ xmlns:tools="http://schemas.android.com/tools"
 android:layout_width="match_parent"
 android:layout_height="match_parent"
 android:background="@color/darkGreen"
-android:layout_marginTop="18dp"
-
 >
 
 <LinearLayout
@@ -149,11 +147,11 @@ android:layout_marginTop="18dp"
         />
 
     <!-- Video View -->
-    <VideoView
+    <com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView
         android:id="@+id/videoView"
         android:layout_width="match_parent"
         android:layout_height="200dp"
-        android:layout_marginBottom="16dp"/>
+        android:layout_marginBottom="50dp"/>
 
     <!-- Buttons (Add to Calendar & Add to Favorites) -->
 

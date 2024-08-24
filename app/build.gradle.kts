@@ -67,5 +67,6 @@ dependencies {
     annotationProcessor (libs.room.compiler)
     implementation (libs.room.rxjava3)
     implementation (libs.room.guava)
+    implementation ("com.pierfrancescosoffritti.androidyoutubeplayer:core:12.0.0")
 
 }

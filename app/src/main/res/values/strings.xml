@@ -33,4 +33,6 @@
     <string name="ingredients">Ingredients</string>
     <string name="video_of_preparation">Video of preparation</string>
     <string name="meal_title">Meal Title</string>
+    <string name="meals">Meals:</string>
+    <string name="appName">Daily Dash</string>
 </resources>

@@ -14,7 +14,6 @@ import com.example.dailydash.R;
 import com.example.dailydash.authentication.BaseView;
 import com.example.dailydash.authentication.login.views.LoginActivity;
 import com.example.dailydash.authentication.register.presenter.RegisterPresenterImpl;
-import com.example.dailydash.authentication.data.repo.Respiratory;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
 
@@ -41,7 +40,7 @@ public class SignUp extends AppCompatActivity implements BaseView {
         signUpWithGoogle = findViewById(R.id.imageView6);
 
         presenter = new RegisterPresenterImpl(this,
-                new Respiratory(this));
+            this);
 
         signUp.setOnClickListener(v -> {
             presenter.onSignUpClicked(getEmail(), getPassword(), getConfirmPassword());

@@ -6,6 +6,7 @@ public class SharedPreferences {
 
     private static final String PREF_NAME = "DailyDashPreferences";
     private static final String KEY_IS_LOGGED_IN = "isLoggedIn";
+    private static final String USER_ID = "userId";
     private final android.content.SharedPreferences preferences;
 
     public SharedPreferences(Context context) {
@@ -16,7 +17,15 @@ public class SharedPreferences {
         preferences.edit().putBoolean(KEY_IS_LOGGED_IN, isLoggedIn).apply();
     }
 
+    public void setUserId(String userId) {
+        preferences.edit().putString(USER_ID, userId).apply();
+    }
+
     public boolean isLoggedIn() {
         return preferences.getBoolean(KEY_IS_LOGGED_IN, false);
+    }
+
+    public String getUserId() {
+        return preferences.getString(USER_ID, "");
     }
 }

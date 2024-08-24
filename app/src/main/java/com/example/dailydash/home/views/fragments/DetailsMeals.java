@@ -1,7 +1,7 @@
 package com.example.dailydash.home.views.fragments;
-
 import android.content.Context;
 import android.os.Bundle;
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -12,8 +12,6 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.widget.VideoView;
-
 import com.bumptech.glide.Glide;
 import com.example.dailydash.R;
 import com.example.dailydash.home.data.models.Ingredient;
@@ -23,6 +21,9 @@ import com.example.dailydash.home.views.adpoter.IngredientAdapter;
 import com.example.dailydash.home.views.interfaces.DetailsMealsContract;
 import com.example.dailydash.planer.data.database.MealPlan;
 import com.google.android.material.datepicker.MaterialDatePicker;
+import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer;
+import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener;
+import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView;
 
 import androidx.appcompat.app.AlertDialog;
 import java.util.List;
@@ -35,7 +36,7 @@ public class DetailsMeals extends Fragment implements DetailsMealsContract.View 
     private ImageButton planIcon;
     private TextView textView,instructions;
     private ImageView imageView;
-    private VideoView videoView;
+    private YouTubePlayerView videoView;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -59,11 +60,17 @@ public class DetailsMeals extends Fragment implements DetailsMealsContract.View 
                 textView.setText(meal.getStrMeal());
                 instructions.setText(meal.getStrInstructions());
                 Glide.with(context).load(meal.getStrMealThumb()).into(imageView);
-                if(meal.getStrYoutube() != null) {
-                    videoView.setVideoPath(meal.getStrYoutube());
-                    videoView.start();
 
+                if (meal.getStrYoutube() != null && !meal.getStrYoutube().isEmpty()) {
+                    getLifecycle().addObserver(videoView);
+                    videoView.addYouTubePlayerListener(new AbstractYouTubePlayerListener() {
+                        @Override
+                        public void onReady(@NonNull YouTubePlayer youTubePlayer) {
+                            youTubePlayer.loadVideo(extractVideoId(meal.getStrYoutube()), 0);
+                        }
+                    });
                 }
+
                 List<Ingredient> ingredients = meal.getIngredients();
                 recyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
                 IngredientAdapter adapter = new IngredientAdapter(context, ingredients);
@@ -108,6 +115,8 @@ public class DetailsMeals extends Fragment implements DetailsMealsContract.View 
     public void showError(String message) {
         Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
     }
-
+    private String extractVideoId(String youtubeUrl) {
+        return youtubeUrl != null && youtubeUrl.contains("v=") ? youtubeUrl.split("v=")[1] : "";
+    }
 
 }

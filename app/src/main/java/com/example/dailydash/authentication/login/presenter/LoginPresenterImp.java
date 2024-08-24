@@ -1,21 +1,23 @@
 package com.example.dailydash.authentication.login.presenter;
 
+import android.content.Context;
+
 import com.example.dailydash.authentication.BaseView;
-import com.example.dailydash.authentication.data.repo.Respiratory;
+import com.example.dailydash.authentication.data.repo.AuthenticationRepository;
 
 public class LoginPresenterImp implements  LoginPresenter{
     BaseView baseView;
-    Respiratory repo;
-    public LoginPresenterImp(BaseView baseView, Respiratory repo) {
+    AuthenticationRepository repo;
+    public LoginPresenterImp(BaseView baseView, Context context ) {
         this.baseView = baseView;
-        this.repo = repo;
+        this.repo = AuthenticationRepository.getInstance(context);
     }
     public void onSignUpClicked(String email, String password) {
         if (
                 validateInput(email, password)) {
             baseView.showProgress();
             repo.logIn(email, password, task -> {
-                repo.addToPreferences(true);
+                repo.addLoginToPreferences(true);
                 baseView.hideProgress();
 
                 if (task.isSuccessful()) {

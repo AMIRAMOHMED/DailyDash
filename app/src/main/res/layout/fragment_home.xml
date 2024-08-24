@@ -47,7 +47,7 @@
                     android:layout_marginTop="60dp"
                     android:fontFamily="@font/poppins"
                     android:padding="10dp"
-                    android:background="#43E7F0DC"
+                    android:background="#B2E7F0DC"
                     android:text="@string/name_of_meal"
                     android:textColor="@color/darkGreen"
                     android:textSize="24sp" />

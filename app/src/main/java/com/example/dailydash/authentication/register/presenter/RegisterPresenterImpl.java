@@ -1,15 +1,19 @@
 package com.example.dailydash.authentication.register.presenter;
 
-import com.example.dailydash.authentication.data.repo.Respiratory;
+import android.content.Context;
+import android.util.Log;
+
+import com.example.dailydash.authentication.data.repo.AuthenticationRepository;
 import com.example.dailydash.authentication.BaseView;
+import com.google.firebase.auth.FirebaseAuth;
 
 public class RegisterPresenterImpl implements RegisterPresenter {
     BaseView baseView;
-    Respiratory repo;
+    AuthenticationRepository repo;
 
-    public RegisterPresenterImpl(BaseView baseView, Respiratory repo) {
+    public RegisterPresenterImpl(BaseView baseView, Context context) {
         this.baseView = baseView;
-        this.repo = repo;
+        this.repo = AuthenticationRepository.getInstance(context);
     }
 
 
@@ -23,6 +27,10 @@ public class RegisterPresenterImpl implements RegisterPresenter {
                 baseView.hideProgress();
                 if (task.isSuccessful()) {
                     baseView.navigateToNextScreen();
+                    repo.addLoginToPreferences(true);
+                    String uid = FirebaseAuth.getInstance().getUid();
+                    repo.addedUserIdToPreferences(uid);
+                    Log.i("Firebaseuid", "onSignUpClicked: "+uid);
                 } else {
                     baseView.showError(task.getException().getMessage());
                 }

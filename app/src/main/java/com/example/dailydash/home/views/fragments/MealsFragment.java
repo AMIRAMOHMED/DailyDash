@@ -36,7 +36,6 @@ public class MealsFragment extends Fragment implements MealsFragmentInterface {
         View view = inflater.inflate(R.layout.fragment_meals, container, false);
 
         RecyclerView mealsRecyclerView = view.findViewById(R.id.mealRecycler);
-        TextView nameOfMeal = view.findViewById(R.id.title);
 
         LinearLayoutManager mealsLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
         mealsRecyclerView.setLayoutManager(mealsLayoutManager);
@@ -54,7 +53,6 @@ public class MealsFragment extends Fragment implements MealsFragmentInterface {
             Log.d("MealsFragment", "Specified Type: " + specifiedType);
 
             presenter.fetchMeals(choosensearch, specifiedType);
-            nameOfMeal.setText(choosensearch);
         }
 
         return view;
