@@ -13,6 +13,8 @@ public interface DetailsMealsContract {
     }
 
     interface Presenter {
+
+        void setupFavoriteIcon(Meals meal, ImageButton favIcon);
         void onFavoriteClicked(Meals meal, ImageButton favIcon);
         void onPlanIconClicked(Meals meal, long selectedDate);
         void deleteMealPlan(MealPlan mealPlan);

@@ -1,19 +1,14 @@
 package com.example.dailydash.home.views.adpoter;
 
-import static java.security.AccessController.getContext;
-
-import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import com.bumptech.glide.request.target.CustomTarget;
-import com.bumptech.glide.request.transition.Transition;
-import androidx.annotation.Nullable;
-import androidx.annotation.NonNull;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.cardview.widget.CardView;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
@@ -21,10 +16,10 @@ import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-
+import com.bumptech.glide.request.target.CustomTarget;
+import com.bumptech.glide.request.transition.Transition;
 import com.example.dailydash.R;
 import com.example.dailydash.home.data.models.Meals;
-import com.example.dailydash.home.views.Utility.FavoriteUtils;
 import com.example.dailydash.home.views.fragments.HomeFragment;
 import com.example.dailydash.home.views.fragments.HomeFragmentDirections;
 import com.example.dailydash.home.views.fragments.MealsFragment;
@@ -70,9 +65,9 @@ public class MealItemAdaptor extends RecyclerView.Adapter<MealItemAdaptor.MealVi
         });
 
 
-        Glide.with(holder.itemView.getContext()) // Use the context from the ViewHolder
-                .load(meal.getStrMealThumb()) // Assuming 'getImageUrl()' returns the image URL from the Meals object
-                .into(new CustomTarget<Drawable>() { // Use a CustomTarget to set the background
+        Glide.with(holder.itemView.getContext())
+                .load(meal.getStrMealThumb())
+                .into(new CustomTarget<Drawable>() {
                     @Override
                     public void onResourceReady(@NonNull Drawable resource, @Nullable Transition<? super Drawable> transition) {
                         holder.constraintLayout.setBackground(resource); // Set the background

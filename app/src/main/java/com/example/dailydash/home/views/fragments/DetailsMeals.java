@@ -59,12 +59,14 @@ mealPlanRepository = MealPlanRepository.getInstance(getContext());
         if (context != null) {
             presenter = new DetailsMealsPresenter(this, context);
 
+
             if (getArguments() != null) {
                 DetailsMealsArgs args = DetailsMealsArgs.fromBundle(getArguments());
                 Meals meal = args.getMeal();
                 textView.setText(meal.getStrMeal());
                 instructions.setText(meal.getStrInstructions());
                 Glide.with(context).load(meal.getStrMealThumb()).into(imageView);
+                presenter.setupFavoriteIcon(meal, favIcon);
 
                 if (meal.getStrYoutube() != null && !meal.getStrYoutube().isEmpty()) {
                     getLifecycle().addObserver(videoView);

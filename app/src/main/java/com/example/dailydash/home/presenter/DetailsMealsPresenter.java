@@ -5,6 +5,9 @@ import android.content.Context;
 import android.util.Log;
 import android.widget.ImageButton;
 
+import androidx.core.content.ContextCompat;
+
+import com.example.dailydash.R;
 import com.example.dailydash.authentication.data.repo.AuthenticationRepository;
 import com.example.dailydash.home.data.database.FavoriteMeal;
 import com.example.dailydash.home.data.models.Meals;
@@ -48,6 +51,9 @@ private  Context context;
     }
 
 
+
+
+
     @Override
 public void onPlanIconClicked(Meals meal, long selectedDate) {
     String date = new java.text.SimpleDateFormat("dd/MM/yyyy", java.util.Locale.getDefault()).format(new java.util.Date(selectedDate));
@@ -74,6 +80,21 @@ public void onPlanIconClicked(Meals meal, long selectedDate) {
                     })
     );
 }
+@Override
+    public void setupFavoriteIcon(Meals meal, ImageButton favIcon) {
+        String userId = authReop.readUserIdFromPreferences();
+        FavoriteMeal favMeal = new FavoriteMeal(meal.getStrMeal(), meal.getStrMealThumb(), userId, meal.getIdMeal());
+
+        repository.isFavoriteMeal(favMeal.getMealId())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(isFavorite -> {
+                    if (isFavorite) {
+                        favIcon.setColorFilter(ContextCompat.getColor(context, R.color.red));
+                    } else {
+                        favIcon.setColorFilter(ContextCompat.getColor(context, R.color.LightGreen));
+                    }
+                });
+    }
 
 private void addMealToPlan(Meals meal, String date) {
     String userId = authReop.readUserIdFromPreferences();
@@ -124,4 +145,6 @@ public void clear() {
         compositeDisposable.clear();
     }
 }
+
+
 }

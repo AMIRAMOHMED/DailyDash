@@ -58,4 +58,9 @@
             android:id="@+id/action_mealsFragment_to_detailsMeals"
             app:destination="@id/detailsMeals" />
     </fragment>
+    <fragment
+        android:id="@+id/navFav"
+        android:name="com.example.dailydash.home.views.fragments.FavFragment"
+        android:label="fragment_fav"
+        tools:layout="@layout/fragment_fav" />
 </navigation>

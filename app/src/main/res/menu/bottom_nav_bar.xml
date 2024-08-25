@@ -17,8 +17,13 @@
         android:icon="@drawable/calendar"
         android:title="@string/calendar" />
 
+    <item android:id="@+id/navFav"
+        android:icon="@drawable/favorite"
+        android:title="@string/favourite" />
 
     <item android:id="@+id/navProfile"
         android:icon="@drawable/person"
         android:title="@string/profile" />
+
+
 </menu>
