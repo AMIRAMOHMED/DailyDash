@@ -1,8 +1,11 @@
 package com.example.dailydash.authentication.data.repo;
 
 import android.content.Context;
+
+import com.example.dailydash.R;
 import com.example.dailydash.authentication.data.sharedprefernce.SharedPreferences;
 import com.example.dailydash.authentication.data.firebase.FirebaseAuthenticatoin;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.firebase.auth.AuthResult;
 
@@ -16,6 +19,8 @@ public class AuthenticationRepository {
     public AuthenticationRepository(Context context) {
         this.sharedPreferences = new SharedPreferences(context);
         this.firebaseAuthenticatoin = new FirebaseAuthenticatoin();
+        this.firebaseAuthenticatoin = new FirebaseAuthenticatoin();
+        firebaseAuthenticatoin.configureGoogleSignIn(context, context.getString(R.string.client_id));
     }
     public static AuthenticationRepository getInstance(Context context) {
         if (repoInstance == null) {
@@ -23,6 +28,12 @@ public class AuthenticationRepository {
         }
         return repoInstance;
     }
+
+    public void signInWithGoogle(GoogleSignInAccount account, OnCompleteListener<AuthResult> listener) {
+        firebaseAuthenticatoin.firebaseAuthWithGoogle(account)
+                .addOnCompleteListener(listener);
+    }
+
 
     public void singUp(String email, String password, OnCompleteListener<AuthResult> listener) {
         firebaseAuthenticatoin.singUp(email, password)
