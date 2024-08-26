@@ -48,6 +48,10 @@ public class Repository {
         return apiClient.getRandomMeal()
                 .subscribeOn(Schedulers.io());
     }
+    public Observable<MealsResponse> gteMealById(String id) {
+        return apiClient.getMealById(id)
+                .subscribeOn(Schedulers.io());
+    }
 
     public Observable<AreaResponse> getAreas() {
         return apiClient.getAreas()

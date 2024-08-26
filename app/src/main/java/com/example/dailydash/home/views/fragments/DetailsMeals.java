@@ -53,54 +53,58 @@ public class DetailsMeals extends Fragment implements DetailsMealsContract.View 
         instructions = view.findViewById(R.id.instructions);
         imageView = view.findViewById(R.id.mealImage);
         videoView = view.findViewById(R.id.videoView);
-mealPlanRepository = MealPlanRepository.getInstance(getContext());
+        mealPlanRepository = MealPlanRepository.getInstance(getContext());
 
         Context context = getContext();
         if (context != null) {
             presenter = new DetailsMealsPresenter(this, context);
 
-
             if (getArguments() != null) {
                 DetailsMealsArgs args = DetailsMealsArgs.fromBundle(getArguments());
-                Meals meal = args.getMeal();
-                textView.setText(meal.getStrMeal());
-                instructions.setText(meal.getStrInstructions());
-                Glide.with(context).load(meal.getStrMealThumb()).into(imageView);
-                presenter.setupFavoriteIcon(meal, favIcon);
-
-                if (meal.getStrYoutube() != null && !meal.getStrYoutube().isEmpty()) {
-                    getLifecycle().addObserver(videoView);
-                    videoView.addYouTubePlayerListener(new AbstractYouTubePlayerListener() {
-                        @Override
-                        public void onReady(@NonNull YouTubePlayer youTubePlayer) {
-                            youTubePlayer.loadVideo(extractVideoId(meal.getStrYoutube()), 0);
-                        }
-                    });
-                }
-
-                List<Ingredient> ingredients = meal.getIngredients();
-                recyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
-                IngredientAdapter adapter = new IngredientAdapter(context, ingredients);
-                recyclerView.setAdapter(adapter);
-
-                favIcon.setOnClickListener(v -> presenter.onFavoriteClicked(meal, favIcon));
-                planIcon.setOnClickListener(v -> {
-                    MaterialDatePicker<Long> materialDatePicker = MaterialDatePicker.Builder.datePicker()
-                            .setTitleText("Select a date")
-                            .setSelection(MaterialDatePicker.todayInUtcMilliseconds())
-                            .build();
-
-                    materialDatePicker.addOnPositiveButtonClickListener(selection -> {
-                        long selectedDate = selection;
-                        presenter.onPlanIconClicked(meal, selectedDate);
-                    });
-                    materialDatePicker.show(getParentFragmentManager(), "DATE_PICKER");
-                });
+                String mealID = args.getMealId();
+                presenter.fetchMealById(mealID); // Fetch the meal details
             }
         }
         return view;
     }
 
+    @Override
+    public void showMealDetails(Meals meal) {
+        textView.setText(meal.getStrMeal());
+        instructions.setText(meal.getStrInstructions());
+        Glide.with(getContext()).load(meal.getStrMealThumb()).into(imageView);
+        presenter.setupFavoriteIcon(meal, favIcon);
+
+        if (meal.getStrYoutube() != null && !meal.getStrYoutube().isEmpty()) {
+            getLifecycle().addObserver(videoView);
+            videoView.addYouTubePlayerListener(new AbstractYouTubePlayerListener() {
+                @Override
+                public void onReady(@NonNull YouTubePlayer youTubePlayer) {
+                    youTubePlayer.loadVideo(extractVideoId(meal.getStrYoutube()), 0);
+                }
+            });
+        }
+
+        List<Ingredient> ingredients = meal.getIngredients();
+        RecyclerView recyclerView = getView().findViewById(R.id.ingredientRecyclerView);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
+        IngredientAdapter adapter = new IngredientAdapter(getContext(), ingredients);
+        recyclerView.setAdapter(adapter);
+
+        favIcon.setOnClickListener(v -> presenter.onFavoriteClicked(meal, favIcon));
+        planIcon.setOnClickListener(v -> {
+            MaterialDatePicker<Long> materialDatePicker = MaterialDatePicker.Builder.datePicker()
+                    .setTitleText("Select a date")
+                    .setSelection(MaterialDatePicker.todayInUtcMilliseconds())
+                    .build();
+
+            materialDatePicker.addOnPositiveButtonClickListener(selection -> {
+                long selectedDate = selection;
+                presenter.onPlanIconClicked(meal, selectedDate);
+            });
+            materialDatePicker.show(getParentFragmentManager(), "DATE_PICKER");
+        });
+    }
     @Override
     public void showMealDialog(MealPlan existingMealPlan) {
         new AlertDialog.Builder(getContext())
@@ -121,6 +125,9 @@ mealPlanRepository = MealPlanRepository.getInstance(getContext());
     public void showError(String message) {
         Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
     }
+
+
+
     private String extractVideoId(String youtubeUrl) {
         return youtubeUrl != null && youtubeUrl.contains("v=") ? youtubeUrl.split("v=")[1] : "";
     }

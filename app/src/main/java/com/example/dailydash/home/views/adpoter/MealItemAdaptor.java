@@ -31,12 +31,11 @@ import java.util.List;
 public class MealItemAdaptor extends RecyclerView.Adapter<MealItemAdaptor.MealViewHolder> {
 
     private ArrayList<Meals> meals;
-    private Fragment fragment; // List of meals
+    private OnCookNowClickListener cookNowClickListener;
 
-    public MealItemAdaptor(ArrayList<Meals> meals, Fragment fragment) {
+    public MealItemAdaptor(ArrayList<Meals> meals, OnCookNowClickListener cookNowClickListener) {
         this.meals = meals;
-        // Constructor for initializing the meal list
-        this.fragment = fragment;
+        this.cookNowClickListener = cookNowClickListener;
     }
 
     @NonNull
@@ -52,18 +51,7 @@ public class MealItemAdaptor extends RecyclerView.Adapter<MealItemAdaptor.MealVi
 
         // Bind the Meal data to the views
         holder.MealName.setText(meal.getStrMeal());
-        holder.cookNow.setOnClickListener(v -> {
-            if (fragment instanceof HomeFragment) {
-                HomeFragmentDirections.ActionHomeFragmentToDetailsMeals action =
-                        HomeFragmentDirections.actionHomeFragmentToDetailsMeals(meal);
-                Navigation.findNavController(v).navigate(action);
-            } else if (fragment instanceof MealsFragment) {
-                MealsFragmentDirections.ActionMealsFragmentToDetailsMeals action =
-                        MealsFragmentDirections.actionMealsFragmentToDetailsMeals(meal);
-                Navigation.findNavController(v).navigate(action);
-            }
-        });
-
+        holder.cookNow.setOnClickListener(v -> cookNowClickListener.onCookNowClicked(meal));
 
         Glide.with(holder.itemView.getContext())
                 .load(meal.getStrMealThumb())
@@ -103,7 +91,9 @@ public class MealItemAdaptor extends RecyclerView.Adapter<MealItemAdaptor.MealVi
             constraintLayout=itemView.findViewById(R.id.constraintLayoutAll);
         }
     }
-
+    public interface OnCookNowClickListener {
+        void onCookNowClicked(Meals meal);
+    }
     public void updateMeals(List<Meals> newMeals) {
         this.meals.clear();
         this.meals.addAll(newMeals);

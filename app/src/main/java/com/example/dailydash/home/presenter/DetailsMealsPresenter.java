@@ -52,7 +52,24 @@ private  Context context;
 
 
 
+    @Override
 
+    public void fetchMealById(String mealId) {
+        compositeDisposable.add(
+                repository.gteMealById(mealId)
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(
+                                mealResponse -> {
+                                    Meals meal = mealResponse.getMeals().get(0);
+                                    view.showMealDetails(meal);
+                                },
+                                throwable -> {
+                                    Log.e("DetailsMealsPresenter", "Error fetching meal by ID", throwable);
+                                    view.showError("Error fetching meal details");
+                                }
+                        )
+        );
+    }
 
     @Override
 public void onPlanIconClicked(Meals meal, long selectedDate) {
@@ -140,7 +157,8 @@ public void deleteMealPlan(MealPlan mealPlan) {
     );
 }
 
-public void clear() {
+
+    public void clear() {
     if (compositeDisposable != null && !compositeDisposable.isDisposed()) {
         compositeDisposable.clear();
     }

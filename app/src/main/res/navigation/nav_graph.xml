@@ -39,8 +39,8 @@
         android:label="fragment_details_meals"
         tools:layout="@layout/fragment_details_meals" >
         <argument
-            android:name="meal"
-            app:argType="com.example.dailydash.home.data.models.Meals" />
+            android:name="mealId"
+            app:argType="string" />
     </fragment>
     <fragment
         android:id="@+id/mealsFragment"

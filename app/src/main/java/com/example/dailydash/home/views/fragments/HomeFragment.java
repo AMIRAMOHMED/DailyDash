@@ -26,6 +26,7 @@ import com.bumptech.glide.request.transition.Transition;
 import com.example.dailydash.R;
 import com.example.dailydash.home.data.models.CategoriesResponse;
 import com.example.dailydash.home.data.models.Category;
+import com.example.dailydash.home.data.models.Meals;
 import com.example.dailydash.home.data.models.MealsResponse;
 import com.example.dailydash.home.data.repo.Repository;
 import com.example.dailydash.home.views.adpoter.MealItemAdaptor;
@@ -37,7 +38,7 @@ import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.disposables.CompositeDisposable;
 import io.reactivex.rxjava3.observers.DisposableObserver;
 
-public class HomeFragment extends Fragment implements CategoryListAdapter.CategoryClickListener {
+public class HomeFragment extends Fragment implements MealItemAdaptor.OnCookNowClickListener, CategoryListAdapter.CategoryClickListener {
 
     private RecyclerView categoryRecyclerView, mealsRecyclerView;
     private CategoryListAdapter categoryListAdapter;
@@ -172,7 +173,7 @@ public class HomeFragment extends Fragment implements CategoryListAdapter.Catego
                             nameOfMeal.setText(mealsResponse.getMeals().get(0).getStrMeal());
                             constraintLayout.setOnClickListener(v -> {
                                 com.example.dailydash.home.views.fragments.HomeFragmentDirections.ActionHomeFragmentToDetailsMeals action =
-                                        HomeFragmentDirections.actionHomeFragmentToDetailsMeals(mealsResponse.getMeals().get(0));
+                                        HomeFragmentDirections.actionHomeFragmentToDetailsMeals(mealsResponse.getMeals().get(0).getIdMeal());
                                 Navigation.findNavController(requireView()).navigate(action);
                             });
 
@@ -202,6 +203,18 @@ public class HomeFragment extends Fragment implements CategoryListAdapter.Catego
                         // Optional: Handle completion
                     }
                 }));
+    }
+    @Override
+    public void onCookNowClicked(Meals meal) {
+        Log.i("details", "Meal data before navigation: " + meal.getStrMeal());
+
+        Log.i("details", "Meal data before navigation: " + meal.getStrYoutube());
+
+        HomeFragmentDirections.ActionHomeFragmentToDetailsMeals action =
+                HomeFragmentDirections.actionHomeFragmentToDetailsMeals(meal.getIdMeal());
+        Navigation.findNavController(requireView()).navigate(action);
+
+
     }
 
 

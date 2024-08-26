@@ -10,6 +10,8 @@ public interface DetailsMealsContract {
         void showMealDialog(MealPlan existingMealPlan);
         void showAddedToPlanMessage();
         void showError(String message);
+        void showMealDetails(Meals meal);
+
     }
 
     interface Presenter {
@@ -18,6 +20,7 @@ public interface DetailsMealsContract {
         void onFavoriteClicked(Meals meal, ImageButton favIcon);
         void onPlanIconClicked(Meals meal, long selectedDate);
         void deleteMealPlan(MealPlan mealPlan);
+        void fetchMealById(String mealId);
 
     }
 }

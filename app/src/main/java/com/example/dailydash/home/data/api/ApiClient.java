@@ -48,6 +48,7 @@ public class ApiClient {
         return apiService.getMealsByCategory(category);
     }
 
+
     public Observable<MealsResponse> getRandomMeal() {
         return apiService.getRandomMeal();
     }
@@ -55,6 +56,9 @@ public class ApiClient {
         return apiService.getAreasList();
     }
 
+    public Observable<MealsResponse> getMealById(String id) {
+        return apiService.getMealById(id);
+    }
 
     public Observable<IngredientResponse> getIngredients() {
         return apiService.getIngredientsList();

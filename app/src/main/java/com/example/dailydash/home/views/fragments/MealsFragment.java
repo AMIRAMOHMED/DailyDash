@@ -3,6 +3,7 @@ package com.example.dailydash.home.views.fragments;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -24,7 +25,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class MealsFragment extends Fragment implements MealsFragmentInterface {
+public class MealsFragment extends Fragment implements MealsFragmentInterface , MealItemAdaptor.OnCookNowClickListener  {
 
     private MealItemAdaptor mealItemAdaptor;
     private MealsPresenter presenter;
@@ -39,7 +40,7 @@ public class MealsFragment extends Fragment implements MealsFragmentInterface {
 
         LinearLayoutManager mealsLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
         mealsRecyclerView.setLayoutManager(mealsLayoutManager);
-        mealItemAdaptor = new MealItemAdaptor(new ArrayList<>(),this);
+        mealItemAdaptor = new MealItemAdaptor(new ArrayList<>(), this);
         mealsRecyclerView.setAdapter(mealItemAdaptor);
 
         Repository repository = Repository.getInstance(this.getContext());
@@ -71,6 +72,12 @@ public class MealsFragment extends Fragment implements MealsFragmentInterface {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        presenter.onDestroy();
+    }
+
+    @Override
+    public void onCookNowClicked(Meals meal) {
+        MealsFragmentDirections.ActionMealsFragmentToDetailsMeals action =
+                MealsFragmentDirections.actionMealsFragmentToDetailsMeals(meal.getIdMeal());
+        Navigation.findNavController(requireView()).navigate(action);
     }
 }
