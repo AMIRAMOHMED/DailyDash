@@ -1,0 +1,56 @@
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:cardCornerRadius="20dp"
+    android:elevation="30dp"
+    android:background="@color/backGround"
+    android:padding="16dp">
+<LinearLayout
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+<ImageView
+    android:id="@+id/imageView12"
+    android:layout_width="match_parent"
+    android:layout_height="150dp"
+    android:layout_gravity="center"
+    android:layout_marginBottom="16dp"
+    android:layout_marginTop="16dp" />
+
+<TextView
+    android:id="@+id/alert_message"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:textSize="16sp"
+    android:textColor="@color/darkGreen"
+    android:gravity="center"
+    android:layout_marginBottom="16dp"/>
+
+<Button
+    android:elevation="40dp"
+
+    android:id="@+id/positive_button"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:text="@string/ok"
+    android:textSize="22sp"
+    android:fontFamily="@font/poppins"
+    android:layout_marginBottom="8dp"
+    android:backgroundTint="@color/LightGreen"
+    />
+
+<Button
+    android:id="@+id/negative_button"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:visibility="gone"
+    android:textSize="22sp"
+    android:fontFamily="@font/poppins"
+    android:layout_marginBottom="8dp"
+    android:backgroundTint="@color/LightGreen"
+    android:text="@string/canel" />
+</LinearLayout>
+
+</androidx.cardview.widget.CardView>

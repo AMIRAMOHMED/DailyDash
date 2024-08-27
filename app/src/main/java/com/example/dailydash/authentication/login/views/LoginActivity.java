@@ -27,7 +27,7 @@ public class LoginActivity extends AppCompatActivity implements BaseView {
 
     private TextInputEditText email, password;
     private MaterialButton signIn;
-    private TextView signUp;
+    private TextView signUp,guest;
     private ImageView googleButton;
     private LottieAnimationView lottieAnimationView;
 
@@ -48,6 +48,7 @@ public class LoginActivity extends AppCompatActivity implements BaseView {
         signUp = findViewById(R.id.textButton2);
         googleButton = findViewById(R.id.imageView6);
         lottieAnimationView = findViewById(R.id.lottieAnimationView);
+        guest = findViewById(R.id.guest);
         this.repo = AuthenticationRepository.getInstance(this);
 
         FirebaseAuth auth = FirebaseAuth.getInstance();
@@ -66,6 +67,7 @@ public class LoginActivity extends AppCompatActivity implements BaseView {
             loginPresenter.onSignUpClicked(userEmail, userPassword);
         });
         signUp.setOnClickListener(v -> navigateToSignUp());
+        guest.setOnClickListener(v -> navigateToHome());
     }
 
     private void signInWithGoogle() {

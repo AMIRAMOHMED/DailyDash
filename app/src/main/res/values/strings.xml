@@ -39,4 +39,7 @@
     <string name="backup">Backup</string>
     <string name="log_out">Log out</string>
     <string name="favourite">Favourite</string>
+    <string name="explore_as_guest">Explore as Guest !?</string>
+    <string name="ok">OK</string>
+    <string name="canel">Canel</string>
 </resources>

@@ -1,12 +1,12 @@
 package com.example.dailydash.planer.views.fragment;
 
 import android.app.AlertDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CalendarView;
 import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
@@ -15,26 +15,19 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.dailydash.R;
 import com.example.dailydash.authentication.data.repo.AuthenticationRepository;
+import com.example.dailydash.home.views.Utility.CustomAlertDialogFragment;
 import com.example.dailydash.planer.data.Repository.MealPlanRepository;
 import com.example.dailydash.planer.data.database.MealPlan;
+import com.example.dailydash.planer.presenter.CalendarPresenter;
 import com.example.dailydash.planer.views.adpoters.PlanedMealAdapter;
+import com.example.dailydash.planer.views.interfaces.CalendarContract;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Collections;
 import java.util.List;
 
-import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
-import io.reactivex.rxjava3.disposables.CompositeDisposable;
-import io.reactivex.rxjava3.observers.DisposableCompletableObserver;
-import io.reactivex.rxjava3.schedulers.Schedulers;
-public class CalendarFragment extends Fragment implements PlanedMealAdapter.OnDeleteClickListener {
-private Calendar calendar;
-    private CalendarView calendarView;
-    private List<MealPlan> myPlans;
-    private MealPlanRepository mealPlanRepository;
-    private CompositeDisposable compositeDisposable;
+public class CalendarFragment extends Fragment implements CalendarContract.View, PlanedMealAdapter.OnDeleteClickListener, CustomAlertDialogFragment.CustomAlertDialogListener {
+
+    private CalendarContract.Presenter presenter;
     private RecyclerView recyclerView;
     private PlanedMealAdapter planedMealAdapter;
 
@@ -43,78 +36,16 @@ private Calendar calendar;
                              Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_calendar, container, false);
-        calendarView = view.findViewById(R.id.calenderView);
+
+        MealPlanRepository mealPlanRepository = MealPlanRepository.getInstance(getContext());
+        AuthenticationRepository authRepository = AuthenticationRepository.getInstance(getContext());
+        presenter = new CalendarPresenter(mealPlanRepository, authRepository);
+        presenter.attachView(this);
+
         recyclerView = view.findViewById(R.id.planedmealrecycler);
-
-        mealPlanRepository = MealPlanRepository.getInstance(getContext());
-        compositeDisposable = new CompositeDisposable();
-        calendar = Calendar.getInstance();
-         AuthenticationRepository authReop= AuthenticationRepository.getInstance(getContext());
-
-
-        planedMealAdapter = new PlanedMealAdapter(new ArrayList<>(),this);
+        planedMealAdapter = new PlanedMealAdapter(new ArrayList<>(), this);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setAdapter(planedMealAdapter);
-        String userId = authReop.readUserIdFromPreferences();
-
-        compositeDisposable.add(
-                mealPlanRepository.getMealPlansByUser(userId)
-                        .subscribeOn(Schedulers.io())
-                        .observeOn(AndroidSchedulers.mainThread())
-                        .map(mealPlans -> {
-                            // Get today's date as a string
-                            calendar = Calendar.getInstance();
-                            SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
-                            String todayAsString = dateFormat.format(calendar.getTime());
-
-                            List<MealPlan> futurePlans = new ArrayList<>();
-                            List<MealPlan> pastPlans = new ArrayList<>();
-
-                            // Separate future and past meal plans
-                            for (MealPlan mealPlan : mealPlans) {
-                                if (mealPlan.getDate().compareTo(todayAsString) >= 0) {
-                                    futurePlans.add(mealPlan);
-                                } else {
-                                    pastPlans.add(mealPlan);
-                                }
-                            }
-
-                            // Delete past meal plans
-                            for (MealPlan pastPlan : pastPlans) {
-                                compositeDisposable.add(
-                                        mealPlanRepository.deleteMealPlan(pastPlan)
-                                                .subscribeOn(Schedulers.io())
-                                                .observeOn(AndroidSchedulers.mainThread())
-                                                .subscribeWith(new DisposableCompletableObserver() {
-                                                    @Override
-                                                    public void onComplete() {
-                                                        Log.i("CalendarFragment", "Deleted past meal plan: " + pastPlan);
-                                                    }
-
-                                                    @Override
-                                                    public void onError(Throwable e) {
-                                                        Log.e("CalendarFragment", "Error deleting past meal plan", e);
-                                                    }
-                                                })
-                                );
-                            }
-
-                            // Sort future plans by date
-                            Collections.sort(futurePlans, (meal1, meal2) -> meal1.getDate().compareTo(meal2.getDate()));
-                            return futurePlans;
-                        })
-                        .subscribe(
-                                mealPlans -> {
-                                    myPlans = mealPlans;
-                                    planedMealAdapter.updateData(myPlans);
-                                    Log.i("calendar", "Filtered and sorted meal plans: " + myPlans);
-                                },
-                                throwable -> {
-                                    // Handle error here
-                                    Log.e("calendar", "Error fetching meal plans", throwable);
-                                }
-                        )
-        );
 
         return view;
     }
@@ -122,44 +53,66 @@ private Calendar calendar;
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        if (compositeDisposable != null && !compositeDisposable.isDisposed()) {
-            compositeDisposable.dispose();
-        }
+        presenter.detachView();
     }
 
     @Override
-    public void onDeleteClicked(MealPlan mealPlan) {
+    public void showMealPlans(List<MealPlan> mealPlans) {
+        planedMealAdapter.updateData(mealPlans);
+    }
+
+    @Override
+    public void showLoading() {
+        // Show loading indicator (e.g., a ProgressBar)
+    }
+
+    @Override
+    public void hideLoading() {
+        // Hide loading indicator
+    }
+
+    @Override
+    public void showError(String message) {
+        Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void navigateToLogin() {
+        CustomAlertDialogFragment alertDialog = CustomAlertDialogFragment.newInstance(
+                "Please log in to can made your plane",
+                R.drawable.login,
+                "Login",
+                "Explore as Guest"
+        );
+        alertDialog.show(getChildFragmentManager(), "CustomAlertDialogFragment");
+    }
+
+    @Override
+    public void showDeleteConfirmation(MealPlan mealPlan) {
         new AlertDialog.Builder(getContext())
                 .setTitle("Delete Meal Plan")
                 .setMessage("Are you sure you want to delete this meal plan?")
-                .setPositiveButton(android.R.string.ok, (dialog, which) -> {
-                    compositeDisposable.add(
-                            mealPlanRepository.deleteMealPlan(mealPlan)
-                                    .subscribeOn(Schedulers.io())
-                                    .observeOn(AndroidSchedulers.mainThread())
-                                    .subscribeWith(new DisposableCompletableObserver() {
-                                        @Override
-                                        public void onComplete() {
-                                            if (getActivity() != null) {
-
-                                            // Handle successful deletion
-                                            Toast.makeText(getContext(), "Meal plan deleted", Toast.LENGTH_SHORT).show();
-                                        }}
-
-                                        @Override
-                                        public void onError(Throwable e) {
-                                            Log.e("CalendarFragment", "Error deleting meal plan", e);
-                                            if (getActivity() != null) {
-
-                                            Toast.makeText(getContext(), "Error deleting meal plan", Toast.LENGTH_SHORT).show();
-                                        }}
-                                    })
-                    );
-                })
+                .setPositiveButton(android.R.string.ok, (dialog, which) -> presenter.deleteMealPlan(mealPlan))
                 .setNegativeButton(android.R.string.cancel, null)
                 .show();
     }
 
+    @Override
+    public void showMealDeletedMessage() {
+        Toast.makeText(getContext(), "Meal plan deleted", Toast.LENGTH_SHORT).show();
     }
 
+    @Override
+    public void onDeleteClicked(MealPlan mealPlan) {
+        showDeleteConfirmation(mealPlan);
+    }
 
+    @Override
+    public void onPositiveButtonClick() {
+        presenter.onLoginClick();}
+
+    @Override
+    public void onNegativeButtonClick() {
+
+    }
+}
