@@ -50,7 +50,7 @@ public class ProfileFragment extends Fragment implements ProfileContract.View {
 
     @Override
     public void showRestoreSuccess() {
-        Toast.makeText(getContext(), "Restore successful!", Toast.LENGTH_SHORT).show();
+//        Toast.makeText(getContext(), "Restore successful!", Toast.LENGTH_SHORT).show();
     }
 
     @Override

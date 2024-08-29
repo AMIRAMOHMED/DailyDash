@@ -2,6 +2,7 @@ package com.example.dailydash.home.views.fragments;
 
 import static android.content.ContentValues.TAG;
 
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 
@@ -24,11 +25,14 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.CustomTarget;
 import com.bumptech.glide.request.transition.Transition;
 import com.example.dailydash.R;
+import com.example.dailydash.authentication.login.views.LoginActivity;
 import com.example.dailydash.home.data.models.CategoriesResponse;
 import com.example.dailydash.home.data.models.Category;
 import com.example.dailydash.home.data.models.Meals;
 import com.example.dailydash.home.data.models.MealsResponse;
 import com.example.dailydash.home.data.repo.Repository;
+import com.example.dailydash.home.views.Utility.CustomAlertDialogFragment;
+import com.example.dailydash.home.views.Utility.NetWorkCheck;
 import com.example.dailydash.home.views.adpoter.MealItemAdaptor;
 import com.example.dailydash.home.views.adpoter.CategoryListAdapter;
 import java.util.ArrayList;
@@ -38,7 +42,7 @@ import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.disposables.CompositeDisposable;
 import io.reactivex.rxjava3.observers.DisposableObserver;
 
-public class HomeFragment extends Fragment implements MealItemAdaptor.OnCookNowClickListener, CategoryListAdapter.CategoryClickListener {
+public class HomeFragment extends Fragment implements MealItemAdaptor.OnCookNowClickListener, CategoryListAdapter.CategoryClickListener , CustomAlertDialogFragment.CustomAlertDialogListener {
 
     private RecyclerView categoryRecyclerView, mealsRecyclerView;
     private CategoryListAdapter categoryListAdapter;
@@ -80,8 +84,31 @@ public class HomeFragment extends Fragment implements MealItemAdaptor.OnCookNowC
         // Fetch categories
         fetchCategories();
         getRandomMeal();
+        if (NetWorkCheck.isInternetAvailable(getContext())) {
+            fetchCategories();
+            getRandomMeal();
+        } else {
+            showNoInternetDialog();
+        }
+
         return view;
     }
+    @Override
+    public void onPositiveButtonClick() {
+    }
+    @Override
+    public void onNegativeButtonClick() {
+    }
+    private void showNoInternetDialog() {
+        CustomAlertDialogFragment alertDialog = CustomAlertDialogFragment.newInstance(
+                "Please check your internet connection.",
+                R.drawable.nosiignal,
+                "Retry",
+                "i want be offline"
+        );
+        alertDialog.show(getChildFragmentManager(), "CustomAlertDialogFragment");
+    }
+
 
     private void fetchMealsByCategory(String category) {
         compositeDisposable.add(repository.getMealsByCategory(category)
@@ -108,6 +135,9 @@ public class HomeFragment extends Fragment implements MealItemAdaptor.OnCookNowC
                     }
                 }));
     }
+
+
+
 
     private void fetchCategories() {
         compositeDisposable.add(repository.getCategories()
@@ -178,7 +208,9 @@ public class HomeFragment extends Fragment implements MealItemAdaptor.OnCookNowC
                             });
 
                             Glide.with(requireContext()) // Using requireContext() to get the Fragment's context
-                                    .load(mealsResponse.getMeals().get(0).getStrMealThumb()) // Correct image URL loading
+                                    .load(mealsResponse.getMeals().get(0).getStrMealThumb())
+                                    .placeholder(R.drawable.placeholderimage)
+                                    .error(R.drawable.onerorr)
                                     .into(new CustomTarget<Drawable>() {
                                         @Override
                                         public void onResourceReady(@NonNull Drawable resource, @Nullable Transition<? super Drawable> transition) {

@@ -46,6 +46,8 @@ public class FavItemAdapter extends RecyclerView.Adapter<FavItemAdapter.FavItemV
 
         Glide.with(holder.itemView.getContext())
                 .load(meal.getPhotoUrl())
+                .placeholder(R.drawable.placeholderimage)
+                .error(R.drawable.onerorr)
                 .into(new CustomTarget<Drawable>() {
                     @Override
                     public void onResourceReady(@NonNull Drawable resource, @Nullable Transition<? super Drawable> transition) {

@@ -53,8 +53,8 @@ public class CategoryListAdapter extends RecyclerView.Adapter<CategoryListAdapte
 
         Glide.with(holder.itemView.getContext())
                 .load(category.getStrCategoryThumb())
-                .placeholder(R.drawable.test_image)
-                .error(R.drawable.test_image)
+                .placeholder(R.drawable.placeholderimage)
+                .error(R.drawable.onerorr)
                 .into(holder.categoryImage);
 
 

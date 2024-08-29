@@ -55,6 +55,8 @@ public class MealItemAdaptor extends RecyclerView.Adapter<MealItemAdaptor.MealVi
 
         Glide.with(holder.itemView.getContext())
                 .load(meal.getStrMealThumb())
+                .placeholder(R.drawable.placeholderimage)
+                .error(R.drawable.onerorr)
                 .into(new CustomTarget<Drawable>() {
                     @Override
                     public void onResourceReady(@NonNull Drawable resource, @Nullable Transition<? super Drawable> transition) {

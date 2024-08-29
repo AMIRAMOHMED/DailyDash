@@ -89,6 +89,8 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.SearchView
         // Load the image using Glide
         Glide.with(holder.itemView.getContext())
                 .load(category.getStrCategoryThumb())
+                .placeholder(R.drawable.placeholderimage)
+                .error(R.drawable.onerorr)
                 .into(holder.searchCategoryImage);
 
     }
@@ -107,7 +109,10 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.SearchView
         String flagUrl = areaFlagMap.get(area.getStrArea());
         if (flagUrl != null) {
             Glide.with(holder.itemView.getContext())
+
                     .load(flagUrl)
+                    .placeholder(R.drawable.placeholderimage)
+                    .error(R.drawable.onerorr)
                     .into(holder.searchCategoryImage);
         } else {
             // Set a default image if the flag is not found
@@ -126,7 +131,10 @@ holder.cardView.setOnClickListener(v -> {
 
 });
         Glide.with(holder.itemView.getContext())
+
                 .load("https://www.themealdb.com/images/ingredients/" + ingredient.getStrIngredient() + ".png")
+                .placeholder(R.drawable.placeholderimage)
+                .error(R.drawable.onerorr)
                 .into(holder.searchCategoryImage);
     }
 

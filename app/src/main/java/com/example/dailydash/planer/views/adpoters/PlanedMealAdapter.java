@@ -49,7 +49,9 @@ public class PlanedMealAdapter extends RecyclerView.Adapter<PlanedMealAdapter.Pl
         });
         Glide.with(holder.itemView.getContext())
                 .load(mealPlan.getMealImg())
-                .into(holder.mealImage); // Set image to ImageView
+                .placeholder(R.drawable.placeholderimage)
+                .error(R.drawable.onerorr)
+                .into(holder.mealImage);
     }
 
     @Override

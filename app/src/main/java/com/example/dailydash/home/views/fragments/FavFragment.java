@@ -79,7 +79,7 @@ public class FavFragment extends Fragment implements FavFragmentContract.View, C
 
     @Override
     public void showCompletionMessage() {
-        Toast.makeText(getContext(), "Favorite list fetched", Toast.LENGTH_SHORT).show();
+//        Toast.makeText(getContext(), "Favorite list fetched", Toast.LENGTH_SHORT).show();
     }
 
     @Override
